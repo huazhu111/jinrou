@@ -3,63 +3,164 @@
 # Bind to socket events
 app=require '/app'
 util=require '/util'
+
+# placement of server connection info.
+serverConnectionPlace = null
+# 少し待って初期化
+setTimeout (()->
+    Promise.all([
+        getI18n()
+        JinrouFront.loadServerConnection()
+    ]).then(([i18n, sc])->
+        serverConnectionPlace = sc.place {
+            i18n: i18n,
+            node: document.getElementById 'serverconnection'
+            connected: navigator.onLine ? true
+        }
+    )), 100
 ss.server.on 'disconnect', ->
-    util.message "サーバー","接続が切断されました。"
+    if serverConnectionPlace?
+        serverConnectionPlace.store.setConnection false
+    else
+        # fallback to legacy way of notifying user
+        util.message "サーバー","接続が切断されました。"
 ss.server.on 'reconnect', ->
-    util.message "サーバー","接続が回復しました。ページの更新を行って下さい。"
-    
+    if serverConnectionPlace?
+        serverConnectionPlace.store.setConnection true
+        # activate the registed reconnect event.
+        cdom = $("#content").get 0
+        reconnect = jQuery.data cdom, "reconnect"
+        if reconnect?
+            reconnect()
+    else
+        # fallback to legacy way of notifying user
+        util.message "サーバー","接続が回復しました。ページの更新を行ってください。"
+libban = require '/ban'
+
+
 # 全体告知
 ss.event.on 'grandalert', (msg)->
     util.message msg.title,msg.message
+# 強制リロード
+ss.event.on 'forcereload', ()->
+    location.reload()
 
 # This method is called automatically when the websocket connection is established. Do not rename/delete
 
+# cached values
 my_userid=null
+application_config=null
+# Callbacks waiting for application_config.
+application_config_callbacks = []
 
 exports.init = ->
     # 固定リンク
     $("a").live "click", (je)->
         t=je.currentTarget
         return if je.isDefaultPrevented()
+        # Flag to prevent link feature to work
+        return if t.classList.contains "no-jump"
+
+        href = t.href
+        unless t.classList.contains "mode-change-link"
+            if application_config?.application?.modes?
+                curidx = -1
+                hrefidx = -1
+                modes = application_config.application.modes
+                for mode, i in modes
+                    if location.href.indexOf(mode.url) == 0
+                        curidx = i
+                    if href.indexOf(mode.url) == 0
+                        hrefidx = i
+                if hrefidx >= 0 && hrefidx != curidx
+                    # hrefを書き換え
+                    href = modes[curidx].url + href.slice(modes[hrefidx].url.length)
+        if href != t.href
+            t.href = href
+
         return if t.target=="_blank"
         je.preventDefault()
 
-        app.showUrl t.href
+
+        app.showUrl href
         return
     # ヘルプアイコン
-    $("i[data-helpicon]").live "click", (je)->
+    $("*[data-helpicon]").live "click", (je)->
         t = je.currentTarget
-        util.message "ヘルプ", t.title
+        JinrouFront.loadDialog().then (dialog)->
+            dialog.showMessageDialog {
+                title: "ヘルプ"
+                message: t.getAttribute("data-title") || t.getAttribute('title')
+                ok: "OK"
+            }
+    # メニューの開閉
+    $("#menu-open-icon").click (je)->
+        menu = $ "#menu"
+        unless menu.hasClass("moved")
+            # weird but move menu to the bottom of page,
+            # for rendering purpose.
+            menu.addClass "moved"
+            $("#menu-overlay").append menu
+            setTimeout(()->
+                menu.toggleClass "open"
+            , 0)
+        else
+            $("#menu").toggleClass "open"
+    $("#menu").click (je)->
+        $("#menu").removeClass "open"
 
+    # スマートフォンUIのON/OFF
+    window.addEventListener "storage", (e)->
+        if e.key == "usePhoneUI"
+            use = e.newValue != "false"
+            setPhoneUI use
+    setPhoneUI (localStorage.usePhoneUI != "false")
+
+
+    # 自動ログイン
     if localStorage.userid && localStorage.password
         login localStorage.userid, localStorage.password,(result)->
+            p = location.href
             if result
-                p = location.pathname
-                if p=="/" then p="/my"
+                p = location.href
+                if location.pathname == "/" then p = "/my"
             else
                 #p="/"
                 # 無効
                 localStorage.removeItem "userid"
                 localStorage.removeItem "password"
-            showUrl decodeURIComponent p
+            showUrl p
     else
-        showUrl decodeURIComponent location.pathname
-    # ユーザーCSS指定
-    cp=useColorProfile getCurrentColorProfile()
+        ss.rpc "user.hello", {}, (e)->
+            if e.banid
+                libban.saveBanData e.banid
+            else if e.forgive
+                libban.removeBanData()
+            else
+                checkBanData()
+
+        showUrl location.href
+
+    # 履歴の移動
     window.addEventListener "popstate",((e)->
         # location.pathname
-        showUrl location.pathname,true
+        showUrl location.pathname, util.searchHash(location.search), true
     ),false
-  
+    # application configを取得
+    loadApplicationConfig()
+
 exports.page=page=(templatename,params=null,pageobj,startparam)->
     cdom=$("#content").get(0)
     jQuery.data(cdom,"end")?()
-    jQuery.removeData cdom,"end"
+    jQuery.removeData cdom, "end"
+    jQuery.removeData cdom, "reconnect"
     $("#content").empty()
     $(JT["#{templatename}"](params)).appendTo("#content")
     if pageobj
         pageobj.start(startparam)
         jQuery.data cdom, "end", pageobj.end
+        if pageobj.reconnect?
+            jQuery.data cdom, "reconnect", pageobj.reconnect
 # マニュアルを表示
 manualpage=(pagename)->
     resp=(tmp)->
@@ -67,7 +168,7 @@ manualpage=(pagename)->
         jQuery.data(cdom,"end")?()
         jQuery.removeData cdom,"end"
         $("#content").empty()
-        
+
         $(tmp).appendTo("#content")
         pageobj=Index.manual
         if pageobj
@@ -90,13 +191,38 @@ manualpage=(pagename)->
 
 
 
-exports.showUrl=showUrl=(url,nohistory=false)->
-    if result=url.match /(https?:\/\/.+?)(\/.+)$/
-        if result[1]=="#{location.protocol}//#{location.host}" #location.origin
-            url=result[2]
+exports.showUrl=showUrl=(url,query={},nohistory=false)->
+    try
+        u = new URL url
+        if u.origin == location.origin
+            url = u.pathname
+            # urlSearchParams
+            query = util.searchHash u.search
         else
-            location.href=url
-    
+            location.href = url
+            return
+    catch e
+        # fallback
+        if result=url.match /(https?:\/\/.+?)(\/.+)$/
+            if result[1]=="#{location.protocol}//#{location.host}" #location.origin
+                # no query support!
+                body = result[2]
+                # search部分を探す
+                idx = body.indexOf '?'
+                if idx >= 0
+                    url = body.slice 0, idx
+                    idx2 = body.indexOf '#', idx
+                    query = url.searchHash url.slice(idx, idx2)
+                else
+                    idx2 = body.indexOf '#'
+                    if idx2 >= 0
+                        url = body.slice 0, idx2
+                    else
+                        url = body
+            else
+                location.href=url
+                return
+
     switch url
         when "/my"
             # プロフィールとか
@@ -104,42 +230,91 @@ exports.showUrl=showUrl=(url,nohistory=false)->
                 ss.rpc "user.myProfile", (user)->
                     unless user?
                         # ログインしていない
-                        showUrl "/",nohistory
+                        showUrl "/", {}, nohistory
                         return
                     user[x]?="" for x in ["userid","name","comment"]
                     page "user-profile",user,Index.user.profile,user
 
-            if location.href.match /\/my\?token\=(\w){128}\&timestamp\=(\d){13}$/
-                ss.rpc "user.confirmMail",location.href, (result)->
+            if query.token?.match?(/^\w{128}$/) && query.timestamp?.match?(/^\d{13}$/)
+                ss.rpc "user.confirmMail", {
+                    token: query.token
+                    timestamp: query.timestamp
+                }, (result)->
                     if result?.error?
                         Index.util.message "エラー",result.error
                         return
                     if result?.info?
                         Index.util.message "通知",result.info
                     if result?.reset
-                        showUrl "/",nohistory
+                        showUrl "/", {}, nohistory
                     else
                         pf()
             else
                 pf()
+        when "/my/log"
+            page "user-mylog", {
+                loggedin: my_userid?
+            }, Index.user.mylog, null
+        when "/my/settings"
+            # ユーザー設定
+            page "user-settings", {
+            }, Index.user.settings, null
+        when "/my/prize"
+            # 称号設定
+            ss.rpc "user.getMyPrizes", (result)->
+                if result?.error?
+                    # TODO
+                    Index.util.message "エラー",result.error
+                    return
+
+                page "user-prize", {}, Index.user.prize, {
+                    prizes: result?.prizes ? []
+                    nowprize: result?.nowprize ? []
+                }
         when "/reset"
             # 找回密码
             page "reset",null,Index.reset, null
         when "/rooms"
             # 部屋一覧
-            page "game-rooms",null,Index.game.rooms, null
+            page "game-rooms", {
+                my: false
+            }, Index.game.rooms, {
+                page: Number query.page || 0
+            }
         when "/rooms/old"
             # 古い部屋
-            page "game-rooms",null,Index.game.rooms,"old"
+            page "game-rooms", {
+                my: false
+            }, Index.game.rooms, {
+                mode: "old"
+                page: Number query.page || 0
+            }
         when "/rooms/log"
             # 終わった部屋
-            page "game-rooms",null,Index.game.rooms,"log"
+            page "game-rooms", {
+                my: false
+            },Index.game.rooms, {
+                mode: "log"
+                page: Number query.page || 0
+            }
         when "/rooms/my"
             # ぼくの部屋
-            page "game-rooms",null,Index.game.rooms,"my"
+            page "game-rooms", {
+                my: true
+            }, Index.game.rooms, {
+                mode: "my"
+                page: Number query.page || 0
+            }
         when "/newroom"
             # 新しい部屋
-            page "game-newroom",null,Index.game.newroom,null
+            ss.rpc "game.themes.getThemeList", (docs)->
+                if docs.error?
+                    # ?
+                    console.error docs.error
+                    docs = []
+                page "game-newroom", null, Index.game.newroom, {
+                    themes: docs
+                }
         when "/lobby"
             # ロビー
             page "lobby",null,Index.lobby,null
@@ -157,21 +332,37 @@ exports.showUrl=showUrl=(url,nohistory=false)->
                 localStorage.removeItem "userid"
                 localStorage.removeItem "password"
                 $("#username").empty()
-                showUrl "/",nohistory
+                showUrl "/", {}, nohistory
         when "/logs"
             # ログ検索
             page "logs",null,Index.logs,null
+        when "/tutorial/game"
+            # ゲーム画面のチュートリアル
+            page "tutorial-game", null, Index.tutorial.game, null
         else
             if result=url.match /^\/room\/-?(\d+)$/
                 # ルーム
+                # preload game-start-control assets.
+                JinrouFront.loadGameStartControl()
                 page "game-game",null,Index.game.game,parseInt result[1]
-            else if result=url.match /^\/user\/(\w+)$/
+            else if result=url.match /^\/user\/(\w+|身代わりくん|%E8%BA%AB%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%8F%E3%82%93)$/
+                userid = result[1]
+                if userid == "%E8%BA%AB%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%8F%E3%82%93"
+                    userid = "身代わりくん"
                 # ユーザー
-                page "user-view",null,Index.user.view,result[1]
+                page "user-view",null,Index.user.view,userid
             else if result=url.match /^\/manual\/job\/(\w+)$/
-                # ジョブ情報
-                win=util.blankWindow "役職説明"
-                $(JT["jobs-#{result[1]}"]()).appendTo win
+                # ジョブ情報を表示
+                Promise.all([
+                    JinrouFront.loadManual().then((m)-> m.loadRoleManual(result[1])),
+                    JinrouFront.loadDialog(),
+                ]).then ([renderContent, dialog])->
+                    dialog.showRoleDescDialog {
+                        modal: false
+                        name: query.jobname || undefined
+                        role: result[1]
+                        renderContent: renderContent
+                    }
                 return
             else if result=url.match /^\/manual\/casting\/(.*)$/
                 # キャスティング情報
@@ -190,94 +381,125 @@ exports.showUrl=showUrl=(url,nohistory=false)->
             else
                 page "top",null,Index.top,null
     unless nohistory
-        history.pushState null,null,url
-                    
-                    
-exports.refresh=->showUrl location.pathname,true
+        pushState url, query
+
+exports.pushState=pushState=(url, query)->
+    history.pushState null, null, "#{url}#{util.hashSearch query}"
+
+
+exports.refresh=->showUrl location.pathname, util.searchHash(location.search), true
 
 exports.login=login=(uid,ups,cb)->
     ss.rpc "user.login", {userid:uid,password:ups},(result)->
-        if result.login
-            # OK
-            my_userid=uid
-            $("#username").text uid
-            if result.lastNews && localStorage.latestNews
-                # 最終ニュースを比較
-                last=new Date result.lastNews
-                latest=new Date localStorage.latestNews
-                if last.getTime() > latest.getTime()
-                    # 新着ニュースあり
-                    # お知らせを入れる
-                    notice=document.createElement "div"
-                    notice.classList.add "notice"
-                    notice.id="newNewsNotice"
-                    notice.textContent="新しいお知らせがあります。マイページをチェックしましょう。"
-                    $("#content").before notice
+        processLoginResult uid, result, cb
+# Promise version of login.
+# Also it saves user into to localStorage.
+exports.loginPromise = (uid, ups)->
+    new Promise (resolve)->
+        login uid, ups, (result)->
+            if result
+                # succeeded to login.
+                localStorage.setItem "userid", uid
+                localStorage.setItem "password", ups
+                resolve true
+            else
+                resolve false
 
-            cb? true
-        else
-            cb? false
+exports.processLoginResult = processLoginResult = (uid, result, cb)->
+    if result.banid
+        libban.saveBanData result.banid
+    else if result.forgive
+        libban.removeBanData()
+    if result.login
+        # OK
+        my_userid=uid
+        $("#username").text uid
+        if result.lastNews && localStorage.latestNews
+            # 最終ニュースを比較
+            last=new Date result.lastNews
+            latest=new Date localStorage.latestNews
+            if last.getTime() > latest.getTime()
+                # 新着ニュースあり
+                # お知らせを入れる
+                notice=document.createElement "div"
+                notice.classList.add "notice"
+                notice.id="newNewsNotice"
+                notice.textContent="新しいお知らせがあります。マイページをチェックしましょう。"
+                $("#content").before notice
+
+        cb? true
+    else
+        cb? false
+    unless result.banid
+        # banではない?
+        checkBanData()
 exports.userid=->my_userid
 exports.setUserid=(id)->my_userid=id
 
-# カラー設定を読み込む
-exports.getCurrentColorProfile=getCurrentColorProfile=->
-    p=localStorage.colorProfile || "{}"
-    obj=null
-    try
-        obj=JSON.parse p
-
-    catch e
-        # default setting
-        obj={}
-    unless obj.day?
-        obj.day=
-            bg:"#ffd953"
-            color:"#000000"
-    unless obj.night?
-        obj.night=
-            bg:"#000044"
-            color:"#ffffff"
-    unless obj.heaven?
-        obj.heaven=
-            bg:"#fffff0"
-            color:"#000000"
-    return obj
-# 保存する
-exports.setCurrentColorProfile=(cp)->
-    localStorage.colorProfile=JSON.stringify cp
-# カラー設定反映
-exports.useColorProfile=useColorProfile=(cp)->
-    st=$("#profilesheet").get 0
-    if st?
-        sheet=st.sheet
-        # 設定されているものを利用
-        while sheet.cssRules.length>0
-            sheet.deleteRule 0
-            
+# Returns a Promise which resolves to the application config.
+exports.getApplicationConfig = getApplicationConfig = ()->
+    if application_config?
+        return Promise.resolve application_config
     else
-        # 新規に作る
-        st=$("<style id='profilesheet'>").appendTo(document.head).get 0
-        sheet=st.sheet
-    # ルールを定義
-    sheet.insertRule """
-body.day, #logs .day {
-    background-color: #{cp.day.bg};
-    color: #{cp.day.color};
-}""",0
-    sheet.insertRule """
-body.night, #logs .werewolf, #logs .monologue {
-    background-color: #{cp.night.bg};
-    color: #{cp.night.color};
-}""",1
-    sheet.insertRule """
-body.night:not(.heaven) a, #logs .werewolf a, #logs .monologue a{
-    color: #{cp.night.color};
-}""",2
-    sheet.insertRule """
-body.heaven, #logs .heaven, #logs .prepare {
-    background-color: #{cp.heaven.bg};
-    color: #{cp.heaven.color};
-}""",3
-    return
+        return new Promise((resolve)->
+            application_config_callbacks.push(resolve))
 
+# Returns a Promise which resolves to an i18n instance with appropreate language setting.
+exports.getI18n = getI18n = ()->
+    Promise.all([
+        getApplicationConfig()
+        JinrouFront.loadI18n()
+    ])
+        .then(([ac, i18n])-> i18n.getI18nFor(ac.language.value))
+
+# Dynamically set usage of phone ui.
+exports.setPhoneUI = setPhoneUI = (use)->
+    content = if use
+        "width=device-width,initial-scale=1"
+    else
+        ""
+    $("#viewport-meta").attr "content", content
+    if !use
+        # restore menu's position.
+        menu = $("#menu")
+        if menu.hasClass "moved"
+            menu.removeClass "moved"
+            menu.insertAfter "#userinfo"
+
+loadApplicationConfig = ()->
+    ss.rpc "app.applicationconfig", (conf)->
+        application_config = conf
+        # call callbacks.
+        for f in application_config_callbacks
+            f conf
+        # HTTP/HTTPS切り替えのための
+        # ツールバーを設定
+        modes = application_config.application.modes
+        if modes?
+            for m in modes
+                if location.href.indexOf(m.url) != 0
+                    span = document.createElement "span"
+                    span.classList.add "tool-button"
+                    if m.icon
+                        icon = document.createElement "i"
+                        icon.classList.add "fa"
+                        icon.classList.add "fa-#{m.icon}"
+                        span.appendChild icon
+                    a = document.createElement "a"
+                    a.href = m.url
+                    a.classList.add "mode-change-link"
+                    a.appendChild(document.createTextNode "#{m.name}へ移動")
+                    span.appendChild a
+                    $("#toolbar").append span
+        # preload front-end assets
+        JinrouFront.loadI18n()
+            .then((i18n)-> i18n.preload conf.language.value)
+checkBanData = ()->
+    libban.loadBanData (data)->
+        if data?
+            console.log "bay", data
+            ss.rpc "user.requestban", data, (result)->
+                if result.banid
+                    libban.saveBanData result.banid
+                else if result.forgive
+                    libban.removeBanData()

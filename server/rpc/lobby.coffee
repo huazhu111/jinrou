@@ -1,5 +1,13 @@
 # Server-side Code
 
+Server=
+    log:require '../log.coffee'
+
+libblacklist = require '../libs/blacklist.coffee'
+libi18n      = require '../libs/i18n.coffee'
+
+i18n = libi18n.getWithDefaultNS 'lobby'
+
 players=[]  # ロビーにいる人たち
 heartbeat_time=10
 
@@ -35,7 +43,7 @@ exports.actions =(req,res,ss)->
     req.use 'session'
 
     enter:->
-        if req.session.userId
+        if req.session.userId && libblacklist.checkPermission "lobby_say", req.session.ban
             unless players.some((x)=>x.userid==req.session.userId)
                 plobj=
                     userid:req.session.userId
@@ -47,22 +55,32 @@ exports.actions =(req,res,ss)->
             heartbeat req.session.userId,ss
 
         req.session.channel.subscribe 'lobby'
-        M.lobby.find().sort({time:-1}).limit(100).toArray (err,docs)->
+        M.lobby.find({}).project({name:1, comment:1, time:1}).sort({time:-1}).limit(100).toArray (err,docs)->
             if err?
                 console.log err
-                throw err
+                res {error: err}
+                return
             res {logs:docs,players:players}
     say:(comment)->
         unless req.session.userId?
+            res {error: i18n.t "common:error.needLogin"}
             return
         unless comment
+            res {error: i18n.t "error.say.needComment"}
+            return
+        unless libblacklist.checkPermission "lobby_say", req.session.ban
+            res {error: i18n.t "error.say.banned"}
             return
         log=
+            userid:req.session.userId
             name:req.session.user.name
             comment:comment
             time:Date.now()
         M.lobby.insert log
         ss.publish.channel "lobby","log",log
+        res null
+
+        Server.log.speakInLobby req.session.user, log
     bye:->
         req.session.channel.unsubscribe 'lobby'
         if req.session.userId

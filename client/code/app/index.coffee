@@ -4,7 +4,9 @@ module.exports=
         profile:require '/user/profile'
         view:require '/user/view'
         graph:require '/user/graph'
-        color:require '/user/color'
+        mylog:require '/user/mylog'
+        settings:require '/user/settings'
+        prize:require '/user/prize'
     game:
         rooms:require '/game/rooms'
         newroom:require '/game/newroom'
@@ -14,6 +16,8 @@ module.exports=
     admin:require '/admin'
     logs:require '/logs'
     reset:require '/reset'
+    tutorial:
+        game: require '/tutorial/game'
     pages:
         casting:require '/pages/casting'
         castlist:require '/pages/castlist'
@@ -22,7 +26,7 @@ module.exports=
     app:require '/app'
     util:require '/util'
     socket:require '/socket'
-    
+
 
 
 

@@ -2,39 +2,69 @@
 html
   head
     meta(charset="utf-8")
-    title 月下人狼
-    meta(name="application-name",content="月下人狼")
-    meta(name="description",content="リアルタイムチャットが可能な人狼サーバーです。70種以上の役職が使用可能。")
-    script(src="https://use.fontawesome.com/e0e7afd227.js")
+    title= Config.name
+    meta#viewport-meta(name="viewport",content="width=device-width,initial-scale=1")
+    meta(name="application-name",content=Config.name)
+    meta(name="description",content=i18n.t('description'))
+    link(rel="icon",sizes="16x16",href="/favicon.ico")
+    link(rel="icon",sizes="144x144",href="/icons/icon-144x144.png")
+    if Array.isArray(Config.additionalMeta)
+      each obj in Config.additionalMeta
+        if obj.type == "script"
+          script(src=obj.src, crossorigin=obj.crossorigin, async=!!obj.async)
+        else if obj.type == "inline-script"
+          script!= obj.text
+    //- load feature-check script if needed.
+    script(src=bundle)
+    if legacyBuilds || notSupportedPage
+      script(src=featureCheckJs)
+    if legacyBuilds
+      script.
+        if(_global_legacy_browser==='legacy'){
+            document.write('<script src="' + !{JSON.stringify(legacyBundle)} + '"></' + 'script>');
+        }
+    else if notSupportedPage
+      script.
+        if(_global_legacy_browser){
+            location.href = !{JSON.stringify(notSupportedPage)};
+        }
     != SocketStream
   body
     header
-      h1 月下人狼
+      h1
+        a(href="/")= Config.name
       #userinfo
         span#username
-      nav
-        ul
-          li
-            a(href="/") トップ
-          li
-            a(href="/my") マイページ
-          li
-            a(href="/lobby") ロビー
-          li
-            a(href="/logout") ログアウト
-          li
-            a(href="/rooms") ルーム一覧
-          li
-            a(href="/logs") ログ検索
-          li
-            a(href="/manual") マニュアル
-          li
-            a(href="/backdoor/home") ホームに戻る
-          li
-            a(href="/manual/about") 月下人狼について
+      #menu
+        .menu-back
+        nav
+          ul
+            li
+              a(href="/my")= i18n.t('mypage')
+            li
+              a(href="/lobby")= i18n.t('lobby')
+            li
+              a(href="/rooms")= i18n.t('rooms')
+            //li
+              a(href="/logs") ログ検索
+            li
+              a(href="/manual")= i18n.t('manual')
+            li
+              a(href="/backdoor/home")= i18n.t('home')
+            li
+              a(href="/manual/about")= i18n.t('about')
+            li
+              a(href="/my/settings")= i18n.t('settings')
+        #toolbar
+      #menu-open-icon
+        button(aria-label=i18n.t('openMenuLabel'))
+          i.fas.fa-bars.fa-2x
     script(type="text/javascript")
       if((("unknown"===typeof localStorage)||("undefined"===typeof localStorage)||(!document.body.classList)||(!document.body.dataset))&&(navigator.userAgent.indexOf("Googlebot")<0)){
         //要件を満たさない
         location.replace("/noIE.html");
       }
     #content
+    #serverconnection
+    #dialogs-overlay
+    #menu-overlay

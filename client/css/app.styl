@@ -13,9 +13,13 @@ body
   //vertical-gradient #eee, #fff
   margin-left 20px
   margin-right 0
+  scroll-behavior smooth
 
 a
   color #000a68
+
+a.user-name
+  white-space pre-wrap
 
 h1
   font-size 1.8em
@@ -30,14 +34,14 @@ h2
   text-shadow 2px 2px 2px rgba(140,140,140,0.25)
   font-weight bold
   margin 0.5em 0
-  
+
 h3
   font-size 1.1em
   text-shadow 1px 1px 1px rgba(100,100,100,0.4)
   text-shadow 2px 2px 2px rgba(140,140,140,0.25)
   margin 0.2em 0
   font-weight bold
-  
+
 h4
   margin 0.15em 0
   font-weight bold
@@ -48,14 +52,20 @@ small
 strong
   font-weight bold
 
+fieldset
+  border 1px dashed #888888
+  padding 0.8em
+  margin 0.6em 0.2em
+
 input[type="number"]
   width 5ex
 
 // help icon
-i[data-helpicon]
+*[data-helpicon]
   display inline-block
   padding 3px
   font-size 1.2em
+  font-size 1.2rem
 
   cursor pointer
 
@@ -70,20 +80,32 @@ body > header
   vertical-gradient #565656,#131313
   border-bottom 1px solid #aaaaaa
   color #ffffff
+  display flex
+  flex-flow row wrap
+  align-items center
+  line-height 1.05
   h1
     // 月下人狼
+    flex auto 0 0
     display inline-block
     margin 0
     font-family 'Takao明朝',serif
     font-size 2em
     text-shadow  1px 1px 1px rgba(200,200,200,0.4)
-  #userinfo,nav
-    display inline-block
-    vertical-align 40%
+    a
+      text-decoration none
+      color #ffffff !important
   #userinfo
     padding 0 5px
-  nav ul li
+// menu for smatphones
+#menu
+  display contents
+  nav
     display inline-block
+    vertical-align 40%
+  nav li
+    display inline-block
+    white-space nowrap
     margin-right 1em
     a
       color #ffffff !important
@@ -91,6 +113,80 @@ body > header
     a:hover
       background-color rgba(0,0,0,.4)
       box-shadow 0 0 5px 5px rgba(0,0,0,.4)
+  #toolbar
+    margin-left auto
+    text-align right
+    span.tool-button
+      display inline-block
+      margin 0 0.7em
+      a
+        color #ffffff !important
+    span.tool-button.tool-disabled
+      color #999999
+#menu-open-icon
+  display none
+  margin 0 0.5em 0 auto
+  button
+    appearance none
+    border none
+    background none
+    color white
+@media (max-width: phone-width)
+  #menu
+    display flex
+    flex-flow column nowrap
+    position fixed
+    top 0
+    left -100vw
+    width 100vw
+    height 100vh
+    transition left 0.2s ease-in-out
+    z-index 20
+
+    &.open
+      left 0
+
+
+    color white
+    border 1px solid white
+
+    .menu-back
+      position absolute
+      left 0
+      top 0
+      width 100vw
+      height 100vh
+      background-color rgba(0, 0, 0, 0.1)
+      z-index 999
+
+    nav
+      display block
+      flex auto 0 0
+      width 80vw
+      z-index 1000
+      background-color rgba(0, 0, 0, 0.78)
+      li
+        display block
+    #toolbar
+      flex auto 1 0
+      width 80vw
+      margin-left 0
+      z-index 1000
+      background-color rgba(0, 0, 0, 0.78)
+      text-align left
+
+    nav li a, #toolbar .tool-button
+      display block
+      font-size 1.2em
+      padding 1em 0.1em 1em 0.2em
+      border-bottom 1px solid white
+  #menu-open-icon
+    display block
+
+// class to cancel the padding of body.
+.whole-page
+  margin-left -20px
+
 //おしらせ
 body > .notice
   margin-left -20px
@@ -112,24 +208,29 @@ body > .notice
   background-color rgba(240,240,240,0.88)
   color #000000
   max-width 20em
-  
+
   overflow hidden
   a
     color #0000FF !important
-  
+
 .window.login
   width 20em
-  
+
 .window > h1
   margin 0 -0.6em
   font-size 1.2em
   padding-left 1.6em
+  cursor default
   color #333333
-  text-shadow #ffffff
   vertical-gradient rgba(255,255,255,0.4), rgba(255,255,255,0.6)
+.window > h1 > span.window-icon
+  position relative
+  left -1.3em
+  top 0
 
 .window form p
   text-align center
+  margin 0.4em 0
 .window .closer
   float right
   background none
@@ -138,297 +239,158 @@ body > .notice
 .window div.window-content
   margin 1em 0.25em
 
-  
+.window p.window-aside
+  text-align right
+button.link-like
+  background-color transparent
+  border none
+  color #666666
+  text-decoration underline
+  cursor pointer
+  font-size 0.9em
+
+//top
+#loginform, #newentryform
+  display grid
+  box-sizing border-box
+  max-width 100%
+  grid-template-columns minmax(auto, max-content) minmax(auto, max-content)
+  grid-gap 0.15em
+  p
+    grid-column span 2
+
+@media (max-width: phone-width)
+  #loginform, #newentryform
+    padding-right 1em
+    input[type="text"], input[type="password"]
+      font-size 16px
+
+
+
 //user-profile
 section.profile
-  p.edit
-    background-color #bbbbbb
-    padding 2px
-    border-radius 3px
-  p.edit:empty
-    height 1em
-  form input[type="text"],form input[type="url"]
-    width 100%
-  table
-    td,th
-      border none
-  table.newstable
-    td,th
-      border 1px solid currentColor
+  p
+    margin 0.6em 0
+
 table.roomstable
   td,th
     border 1px solid currentColor !important
+  span.rooms-td-win
+    color: #CC0000
+    font-weight: bold
+  span.rooms-td-lose
+    color: #0000DD
+    font-weight: bold
+//user mylog
+section.mylog
+  p
+    margin 0.6em 0
+  label.mylog-open
+    cursor pointer
+    &.mylog-open-disabled
+      color #999999
+      cursor default
+
+// graph area
+div.graph-area
+  display flex
+  align-items flex-start
+  li > ul
+    margin-left 1em
+  li.graph-has-child > div.graph-item-title
+    cursor pointer
+    &:hover
+      color #666666
+  li.graph-has-child.graph-item-closed > ul
+    display none
+  div.graph-item-title
+    margin-bottom 0.2em
+
 //roomlist
 #roomlist td
   img
     vertical-align text-bottom
-   
+
 //lobby
 .lobby #users li
   display inline-block
   margin-right 1em
-    
-//game
-body.night
-  background-color #000044
-  color #ffffff
-  a
-    color #ffffff
-  
-body.day
-  //background-color rgb(255,217,83)
-  background-color #f0e68c
-  
-body.heaven
-  background-color rgb(255,255,240)
-  color #000000
-  a
-    color #000a68
-    
-.game
-  .players
-    h1
-      font-size 1.2em
-.game #playernumberinfo
-  font-size 0.8em
-//players
-#players li
-  display inline-block
-  vertical-align top
-  margin-left 0.5em
-  min-width 5em
-  min-height 2em
-  p.job,p.outcome
-    font-weight bold
-  p.outcome.win
-    color:#ff0000
-  p.outcome.lose
-    color:#0000ff
-  figure.icon
-    float left
-.infobox
-    border 2px dashed currentColor
-    padding 8px
-    margin 5px
-#players li.icon
-  min-width 8em
-#players li.dead
-  background-color rgba(0,0,0,0.1)
-  p.name
-    text-decoration line-through
-#form_players li.dead
-  text-decoration line-through
 
-#form_players li
-  display inline-block
-  margin-left 0.8em
-#speakform
-  border-top 1px solid currentColor
-  padding-top 5px
-  textarea
-    vertical-align top
-#gamestart label
-  mergin-right 0.6em
-  border-left 2px dashed #ffffff
-  padding-left 0.4em
+#roomname
+  margin-left: 8px
 
-//logs
+#roomname span.roomname-number
+  display inline-block
+  margin-left 0.7rem
+  font-size 1rem
+  font-weight normal
+#roomname span.roomname-icons
+  display inline-block
+  margin-left 0.3rem
+  font-size 1.2rem
+  letter-spacing 0.1rem
+
+//logs (for lobby)
+#lobbyform
+  input
+    font-size 16px
 #logs
-  //display table
+  padding 5px
+  display grid
+  grid-template-columns fit-content(10em) 1fr auto
   width 100%
   > div
     margin 0
-    padding 1px
-    display table-row
-    width 100%
+    padding 1px 0
     line-height 100%
-    time
-      font-size x-small
-      //opacity 0.5
-      margin-left 2em
-    div.icon
-      border none
+  time
+    font-size x-small
+    //opacity 0.5
+    margin-left 2em
+  div.name
+    grid-column 1
+
+    font-weight bold
+    overflow:hidden
+    white-space nowrap
+    max-width 10em
+    word-wrap break-word
+    text-align right
+  div.comment
+    grid-column 2
+    word-break break-word
+    overflow-wrap break-word
+
+  time.time
+    grid-comlumn 3
+    white-space nowrap
+    max-width 22ex
+@media (max-width: phone-width)
+  #logs
+    grid-template-columns 1fr auto
+    grid-auto-flow dense
     div.name
-      font-weight bold
-      display table-cell
-      //max-width 10em
-      overflow:hidden
-      white-space nowrap
-      max-width 10em
-      word-wrap break-word
-      text-align right
+      grid-column 1
+      max-width none
+      text-align left
+      font-size 0.8em
     div.comment
-      display table-cell
-      width 100%
-      /*div
-        //white-space pre-wrap
-        white-space -moz-pre-wrap
-        white-space -webkit-pre-wrap
-        white-space pre-line
-        word-wrap break-word
-        max-width 600px*/
-    div.comment.big
-      font-size larger
-      font-weight bold
-      line-height 1
-    div.comment.small
-      font-size smaller
-    time.time
-      display table-cell
-      white-space nowrap
-      max-width 22ex
-  .day
-    background-color #f0e68c
-    //borderud 1px dashed rgb(255,234,90)
-    color #000000
-  .half-day
-    background-color rgb(248, 243, 190)
-    color #999999
-  .system
-    background-color #cccccc
-    borderud 1px dashed #aaaaaa
-    font-weight bold
-    color #000000
-  .werewolf,.monologue
-    background-color #000044
-    borderud 1px dashed #000066
-    color #ffffff
-  .heavenmonologue
-    background-color #8888aa
-    color #ffffff
-  .heaven,.prepare
-    background-color rgb(255,255,240)
-    borderud 1px dashed #fffff8
-    color #000000
-  .skill,.wolfskill
-    background-color #cc0000
-    borderud 2px dashed #700000
-    color #ffffff
-    font-weight bold
-  .voteto
-    background-color #009900
-    borderud 2px dashed #004000
-    color #ffffff
-    font-weight bold
-  .nextturn
-    background-color #eeeeee
-    borderud 1px dashed #aaaaaa
-    font-weight bold
-    color #000000
-  .audience
-    background-color #ddffdd
-    borderud 1px dashed #eeffee
-    color #000000
-  .couple
-    background-color #ddddff
-    borderud 1px dashed #eeffee
-    color #000000
-  .fox
-    background-color #934293
-    color #ffffff
-  .will
-    background-color #222222
-    color #ffffff
-  .gm,.gmreply
-    background-color #ffd1d1
-    borderud 1px dashed #ffa8a8
-    color #000000
-  .gmheaven,.gmaudience,.gmmonologue
-    background-color #ffe5c9
-    borderud 1px dashed #ffc68a
-    color #000000
-  .helperwhisper
-    background-color #fff799
-    borderud 1px dashed #e8e000
-    color #000000
-  .inlog
-    background-color #a6daff
-    borderud 1px dashed #00dce8
-    color #000000
-    font-weight bold
-  .userinfo
-    background-color #0000cc
-    borderud 1px dashed #000070
-    color #ffffff
-    font-weight bold
-  .voteresult
-    display table-row
-    div.name
-      display table-cell
-    table
-      display inline-table
-//jobs
-dl.jobs
-  dt.jobs-cat
-    display block
-    margin 0.2em
-    padding 2px
-    background-color rgba(255,255,255,.6)
-
-    text-align center
-    font-weight bold
-  dd.jobs-cat
-    display flex
-    flex-flow row wrap
-    justify-content space-between
-    &::after
-      content ""
-      flex auto
-  div.jobs-job
-    background-color rgba(255,255,255,.3)
-    margin 0.25em
-    padding 0.3em
-    display flex
-    flex-flow column nowrap
-
-    &.jobs-job-active
-      background-color rgba(255,255,255,.82)
-    b
+      grid-column 1 / 3
+    time
+      grid-column 2
+  #lobbyform
+    p
       display flex
       flex-flow row nowrap
-      margin-bottom 0.25em
-      span
-        flex 1 0 auto
-        text-align center
-      a
-        flex 0 0 auto
-        color rgba(0,0,0,.7)
-        text-decoration none
-        margin-left 0.15em
-    &.jobs-job-inactive
-      background-color rgba(255,255,255,.15)
-      b span
-        color rgba(0,0,0,.4)
-    &.jobs-job-error
-      background-color rgba(255,0,0,.82)
+      input[type=text]
+        width: 100%
+        flex auto 1 1
+      input[type=submit]
+        flex auto 0 0
 
-    span.jobs-job-controls
-      word-wrap nowrap
-      text-align center
-      display flex
-      input.jobs-job-controls-check
-        flex 0 0 auto
-      input.jobs-job-controls-number
-        flex 1 0 2.8em
-      button.jobs-job-controls-button
-        border none
-        padding 2px
-        margin 0 0.2em
-        background transparent
 
-        font-size 1.05em
-        color rgba(0,0,0,.6)
-        cursor pointer
-  div.jobs-job[data-job="Human"] span.jobs-job-controls
-    text-align right
-  &[data-checkboxes="no"]
-    span.jobs-job-controls input.jobs-job-controls-check
-      display none
-  &:not([data-checkboxes="no"])
-    div.jobs-job[data-job="Human"]
-      display none
 
-    
+
 //prizeedit
 .profile
   li
@@ -464,12 +426,12 @@ dl.jobs
   li:empty
     min-width 1em
     min-height 1.2em
-    
+
 b
   font-weight bold
 dt
   font-weight bold
-  
+
 table
   border-collapse collapse
   td,th
@@ -539,6 +501,7 @@ section.manual
     margin-top 1.4em
   h3
     margin-top 1em
+
 section.manual.long
   section
     margin-left 2em
@@ -559,6 +522,16 @@ section.jobmanual
   h1
     margin-left -1.25em
     font-size 1.6em
+
+@media (max-width: phone-width)
+  section.manual
+    ul
+      line-height 2em
+    padding-right 1em
+  section.jobmanual
+    margin-left 0.5em
+    h1
+      margin-left -0.5em
 section.castlist
   dd
     margin-left 2em

@@ -1,96 +1,155 @@
 Shared=
     game:exports
+
+# 身代わりセーフティありのときの除外役職一覧
+exports.SAFETY_EXCLUDED_JOBS = SAFETY_EXCLUDED_JOBS = ["QueenSpectator","Spy2","Poisoner","Cat","Cupid","BloodyMary","Noble", "Lover", "Twin","Hunter","MadHunter","Idol","SnowLover","Raven","LunaticLover","HooliganGuard","HooliganAttacker","SantaClaus"]
 # ------ 役職一覧
 # 基本役職
 exports.jobs=["Human","Werewolf","Diviner","Psychic","Madman","Guard","Couple","Fox",
+# ミラーズホロウの人狼
+"Hunter","Cupid",
 # 特殊役職?
 "Poisoner","BigWolf","TinyFox","Cat",
 # るる鯖で見つけた役職
 "Fanatic","Immoral"
 # 特殊役職2
-"Devil","ToughGuy","Cupid","Stalker","OccultMania","WhisperingMad","Lover","Dog",
+"Devil","Stalker","WhisperingMad","Dog",
 # 桃栗基本特殊役職
 "Bat","Noble","Slave","Magician","Spy","WolfDiviner",
 # 桃栗期間限定役職
 "Fugitive","Merchant","QueenSpectator","MadWolf","Liar","Spy2","Copier",
 # 究極の人狼の役職
-"Cursed","ApprenticeSeer","Diseased","Spellcaster","Lycan","Priest","Prince","PI","Sorcerer",
-"Doppleganger","CultLeader","Vampire","LoneWolf","Witch","Oldman","Tanner","WolfCub","Thief",
+"ToughGuy","Cursed","ApprenticeSeer","Diseased","Spellcaster","Lycan","Priest","Prince","PI","Sorcerer",
+"Doppleganger","CultLeader","Vampire","LoneWolf","Witch","Oldman","Tanner","OccultMania","WolfCub","Thief",
 "Hoodlum","TroubleMaker","FrankensteinsMonster",
+"BloodyMary",
 # うそつき人狼の役職
 "Dictator","SeersMama","Trapper","WolfBoy","King",
 # Twitter人狼の役職
 "Counselor","Miko","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf",
+# 人狼物語
+"CurseWolf",
+# 人狼物語（瓜科国）
+"MadCouple",
+# 人狼物語（薔薇の下国）
+"NightRabbit",
+# 人狼物語（深海国）
+"Fate","QueenOfNight","CynthiaWolf",
+# 人狼物語（三日月国）
+"Tarzan",
 # 天国系の役職
+"Lover", # 人狼天国
 "ObstructiveMad", # 人狼天国
 "WanderingGuard", # 錠前天国
 "BadLady", # 蒼汁天国、人狼天国
-"Bomber","Blasphemy","Ushinotokimairi",  # ねじれ天国
+# ねじれ天国
+"Bomber","Blasphemy","Ushinotokimairi","DualPersonality","GachaAddicted",
+"Gambler","Faker",
+# 人狼式
+"Emma","EyesWolf","TongueWolf","Oracle","Hitokotonushinokami",
+"SealWolf",
+# えけけ鯖
+"MadHunter","Ascetic"
+# 人狼パーティー
+"TinyGhost","Ninja","Twin","Dracula","VampireClan"
 # その他
-"RedHood","Baker",
+"RedHood","Baker","XianFox","LunaticLover"
 # 人狼放浪記
-"MadDog","CraftyWolf","Pumpkin","MadScientist","SpiritPossessed"
-# アプリの役職
-"PsychoKiller",
+"MadDog","CraftyWolf","Pumpkin","MadScientist","SpiritPossessed","Forensic"
+# 牢獄の悪夢
+"PsychoKiller","Cosplayer",
+# 人狼NET
+"Satori",
 # わんないと人狼
 "Phantom",
 # 月夜の人狼
-"DrawGirl","CautiousWolf",
+"DrawGirl","CautiousWolf","SnowLover","Raven","Samurai",
+# 月夜の人狼（闇夜の人狼）
+"DarkClown",
 # 人狼HOUSE
-"Hypnotist"
+"Hypnotist",
+# 人狼ジャッジメント
+"BlackCat","Amanojaku",
+# 人狼 SUPER DX（幻冬舎）
+"Illusionist",
+# 魔法都市の人狼
+"Elementaler",
+# 24時間耐久人狼
+"IntuitionWolf",
+# 絶対的人狼
+"AbsoluteWolf",
+# オリジナル
+"SantaClaus","Reindeer",
+"Pyrotechnist","Patissiere","Shishimai","Idol","LurkingMad",
+"DecoyWolf","Hooligan","HomeComer","DragonKnight","Poet","Sacrifice",
+"Synesthete","Streamer","RemoteWorker"
 ]
-# ここには入らない役職
-# Light, Neet, MinionSelector,QuantumPlayer, HolyProtected, BloodyMary
+# 隠されていて自分で入れることができない役職
+exports.hiddenJobs = [
+    "Light", "Neet", "MinionSelector", "QuantumPlayer", "HolyMarked", "Lorelei"
+]
 
-# 期間限定役職
-((date)->
-    month=date.getMonth()
-    d=date.getDate()
-    if month==11 && d>=24
-        # 12/24〜12/31
-        exports.jobs.push "SantaClaus"
-    if month==6 && d>=26 || month==7 && d<=16
-        # 7/26〜8/16
-        exports.jobs.push "Pyrotechnist"
-    if month==1 && 13<=d<=14
-        # 2/13〜2/14
-        exports.jobs.push "Patissiere"
-)(new Date)
 # 人外
-exports.nonhumans=["Werewolf","Fox","BigWolf","TinyFox","WolfDiviner","MadWolf","Devil","Vampire","LoneWolf","WolfCub","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","CautiousWolf","CraftyWolf"]
+exports.nonhumans=["Werewolf","Fox","BigWolf","TinyFox","WolfDiviner","MadWolf","Devil","Vampire","LoneWolf","WolfCub","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","CautiousWolf","CraftyWolf","EyesWolf","TongueWolf","XianFox","DecoyWolf","Dracula","AbsoluteWolf","NightRabbit","CurseWolf","IntuitionWolf","Lorelei","SealWolf","CynthiaWolf"]
 
 # 黒が出る人
-exports.blacks=["Werewolf","WolfDiviner","MadWolf","Lycan","LoneWolf","WolfCub","Dog","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","MadDog","CraftyWolf"]
+exports.blacks=["Werewolf","WolfDiviner","MadWolf","Lycan","LoneWolf","WolfCub","Dog","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","MadDog","CraftyWolf","Cosplayer","EyesWolf","TongueWolf","DecoyWolf","AbsoluteWolf","CurseWolf","IntuitionWolf","SealWolf","CynthiaWolf"]
 
 # チームたち
 exports.teams=teams=
-    Human:["Human","Diviner","Psychic","Guard","Couple","Poisoner","ToughGuy","Noble","Slave","Magician","Fugitive","Merchant","QueenSpectator","MadWolf","Liar","Light","Cursed","ApprenticeSeer","Diseased","Spellcaster","Lycan","Priest","Prince","PI","Cat","Witch","Oldman","OccultMania","Dog","Dictator","SeersMama","Trapper","RedHood","Counselor","Miko","HolyMarked","WanderingGuard","TroubleMaker","FrankensteinsMonster","BloodyMary","King","SantaClaus","Phantom","DrawGirl","Pyrotechnist","Baker","SpiritPossessed"]
-    Werewolf:["Werewolf","Madman","BigWolf","Fanatic","Spy","WolfDiviner","Spy2","Sorcerer","LoneWolf","MinionSelector","WolfCub","WhisperingMad","WolfBoy","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","ObstructiveMad","PsychoKiller","CautiousWolf","Bomber","Ushinotokimairi","MadDog","Hypnotist","CraftyWolf","Pumpkin","MadScientist"]
-    Fox:["Fox","TinyFox","Immoral","Blasphemy"]
+    Human:["Human","Diviner","Psychic","Guard","Couple","Poisoner","ToughGuy","Noble","Slave","Magician","Fugitive","Merchant","QueenSpectator","MadWolf","Liar","Light","Cursed","ApprenticeSeer","Diseased","Spellcaster","Lycan","Priest","Prince","PI","Cat","Witch","Oldman","OccultMania","Dog","Dictator","SeersMama","Trapper","RedHood","Counselor","Miko","HolyMarked","WanderingGuard","TroubleMaker","FrankensteinsMonster","BloodyMary","King","SantaClaus","Phantom","DrawGirl","Pyrotechnist","Baker","SpiritPossessed","GotChocolate","Forensic","Cosplayer","TinyGhost","Ninja","Twin","Hunter","Emma","Idol","HomeComer","Illusionist","DragonKnight","Samurai","Elementaler","Poet","Sacrifice","Oracle","GachaAddicted","Fate","Synesthete","Reindeer","Streamer","Tarzan","Hitokotonushinokami","RemoteWorker","Gambler"]
+    Werewolf:["Werewolf","Madman","BigWolf","Fanatic","Spy","WolfDiviner","Spy2","Sorcerer","LoneWolf","MinionSelector","WolfCub","WhisperingMad","WolfBoy","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","ObstructiveMad","PsychoKiller","CautiousWolf","Bomber","Ushinotokimairi","MadDog","Hypnotist","CraftyWolf","Pumpkin","MadScientist","MadHunter","MadCouple","EyesWolf","TongueWolf","BlackCat","LurkingMad","DecoyWolf","Satori","AbsoluteWolf","QueenOfNight","CurseWolf","IntuitionWolf","Faker","SealWolf","CynthiaWolf"]
+    Fox:["Fox","TinyFox","Immoral","Blasphemy","XianFox","NightRabbit"]
     Devil:["Devil"]
-    Friend:["Cupid","Lover","BadLady","Patissiere"]
-    Vampire:["Vampire"]
-    Others:["Bat","Stalker","Doppleganger","CultLeader","Copier","Tanner","Thief","Hoodlum","QuantumPlayer","Shishimai"],
+    Friend:["Cupid","Lover","BadLady","Patissiere","SnowLover","LunaticLover"]
+    Vampire:["Vampire","Dracula","VampireClan"]
+    Cult:["CultLeader"]
+    Raven:["Raven","Ascetic"]
+    Hooligan:["Hooligan", "HooliganAttacker"]
+    Lorelei:["Lorelei"]
+    Others:["Bat","Stalker","Doppleganger","Copier","Tanner","Thief","Hoodlum","QuantumPlayer","Shishimai","HooliganGuard","Amanojaku","DarkClown","DualPersonality"],
     Neet:["Neet"]
 
 # カテゴリ分け(一部闇鍋でつかうぞ!)
 exports.categories=
-    Human:teams.Human
-    Werewolf:["Werewolf","BigWolf","WolfDiviner","LoneWolf","WolfCub","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","CautiousWolf","CraftyWolf"]
-    Fox:["Fox","TinyFox"]
-    Madman:["Madman","Fanatic","Spy","Spy2","Sorcerer","WhisperingMad","WolfBoy","ObstructiveMad","PsychoKiller","Bomber","Ushinotokimairi","MadDog","Hypnotist","Pumpkin","MadScientist"]
+    Human: teams.Human.filter((x)->
+        not (x in ["GotChocolate", "Phantom", "OccultMania", "Cursed", "BloodyMary","Listener"]))
+    Werewolf:["Werewolf","BigWolf","WolfDiviner","LoneWolf","WolfCub","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf","CautiousWolf","CraftyWolf","EyesWolf","TongueWolf","DecoyWolf","AbsoluteWolf","CurseWolf","IntuitionWolf","SealWolf","CynthiaWolf"]
+    Madman:["Madman","Fanatic","Spy","Spy2","Sorcerer","WhisperingMad","WolfBoy","ObstructiveMad","PsychoKiller","Bomber","Ushinotokimairi","MadDog","Hypnotist","Pumpkin","MadScientist","MadHunter","MadCouple","BlackCat","LurkingMad","Satori","QueenOfNight","Faker"]
+    Fox:["Fox","TinyFox","XianFox","NightRabbit"]
     Immoral:["Immoral","Blasphemy"]
-    Switching:["Stalker","OccultMania","Copier","Cursed","Doppleganger","BloodyMary","Phantom","Thief"]
-    Others:["Devil","Cupid","Bat","CultLeader","Vampire","Tanner","Lover","Hoodlum","BadLady","Patissiere","Shishimai"]
+    # sort by teams （恋人陣営、単独陣営、その他、変化系その他、変化系村人陣営）
+    Others:["Cupid","Lover","BadLady","Patissiere","SnowLover","LunaticLover","Devil","CultLeader","Vampire","Dracula","VampireClan","Raven","Ascetic","Hooligan","Lorelei","Bat","Tanner","Hoodlum","Shishimai","Amanojaku","DarkClown"]
+    Switching:["Stalker","Copier","Doppleganger","DualPersonality","OccultMania","Cursed","BloodyMary","Phantom","Thief"]
+    # Special category for "no category"
+    None:["Neet"]
 
-exports.categoryNames=
-    Human:"村人系"
-    Werewolf:"人狼系"
-    Fox:"妖狐系"
-    Madman:"狂人系"
-    Immoral:"背徳者系"
-    Switching:"役職変化系"
-    Others:"第三陣営系"
+# 配列版のカテゴリリスト
+exports.categoryList = Object.keys(exports.categories)
+    .map (key)-> {
+        id: key
+        roles: exports.categories[key]
+    }
+
+# ガチャデータ（課金者用）
+exports.gachaData =
+    1: ["Human", "Couple", "Noble", "Slave", "Liar", "Lycan", "Oldman",
+        "TinyGhost", "Twin"]
+    2: ["Diviner", "Psychic", "Guard", "Magician", "ToughGuy", "ApprenticeSeer",
+        "Diseased", "Dog", "SeersMama", "DrawGirl", "Cosplayer","Reindeer", "Tarzan",
+        "RemoteWorker"
+    ]
+    3: ["Fugitive", "Cursed", "Spellcaster", "Prince", "PI", "OccultMania",
+        "RedHood", "WanderingGuard", "Phantom", "Pyrotechnist", "Forensic",
+        "Ninja", "Emma", "HomeComer", "Samurai", "Sacrifice", "Oracle", "Poet",
+        "GachaAddicted","Hitokotonushinokami","Gambler"]
+    4: ["Poisoner", "Merchant", "MadWolf", "Light", "Cat", "Witch", "Dictator",
+        "Miko", "HolyMarked", "TroubleMaker", "FrankensteinsMonster",
+        "SantaClaus", "Baker", "SpiritPossessed", "Hunter", "Idol", "Elementaler","Fate",
+        "Synesthete", "Streamer"]
+    5: ["QueenSpectator", "Priest", "Trapper", "Counselor", "BloodyMary", "King",
+        "Illusionist", "DragonKnight"]
+    6: ["Neet", "Helper", "Watching"]
 
 # 役職ルールたち 役職人数一覧を返す（Humanは向こうで補完）
 normal1=(number)->
@@ -159,25 +218,24 @@ normal2=(number)->
     ret.Fox=1   #狐
   ret
 
+exports.normal1 = normal1
+
 exports.jobrules=[
   {
     name:"普通配役"
     rule:[
       {
         name:"普通1"
-        title:"少人数でも楽しめる配役。"
         minNumber:4
         rule:normal1
       }
       {
         name:"普通2"
-        title:"一般的な配役。"
         minNumber:4
         rule:normal2
       }
       {
         name:"普通3"
-        title:"少人数でも狐が出る配役。"
         minNumber:4
         rule:(number)->
           ret=normal1 number
@@ -194,7 +252,6 @@ exports.jobrules=[
     rule:[
       {
         name:"恋人"
-        title:"恋人が出る配役。"
         rule:(number)->
           ret=normal1 number
           if ret.Fox>0  #NaNかも
@@ -205,7 +262,6 @@ exports.jobrules=[
       }
       {
         name:"背徳者"
-        title:"背徳者が出る配役。"
         rule:(number)->
           ret=normal1 number
           if ret.Fox>0
@@ -215,7 +271,6 @@ exports.jobrules=[
       }
       {
         name:"埋毒者あり"
-        title:"埋毒者が出る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Poisoner=1
@@ -224,7 +279,6 @@ exports.jobrules=[
       }
       {
         name:"猫又あり"
-        title:"猫又が出る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Cat=1
@@ -233,7 +287,6 @@ exports.jobrules=[
       }
       {
         name:"囁き狂人"
-        title:"狂人の代わりに囁き狂人が出る配役。"
         rule:(number)->
           ret=normal1 number
           if ret.Madman>0
@@ -248,7 +301,6 @@ exports.jobrules=[
     rule:[
       {
         name:"こうもり"
-        title:"こうもりが入る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Bat=1
@@ -260,7 +312,6 @@ exports.jobrules=[
       }
       {
         name:"貴族奴隷"
-        title:"貴族奴隷が入る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Noble=1
@@ -278,7 +329,6 @@ exports.jobrules=[
       }
       {
         name:"魔術師"
-        title:"魔術師が入る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Magician=1
@@ -286,7 +336,6 @@ exports.jobrules=[
       }
       {
         name:"スパイ"
-        title:"スパイが入る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Spy=1
@@ -296,7 +345,6 @@ exports.jobrules=[
       }
       {
         name:"人狼占い"
-        title:"人狼占いが入る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Werewolf--
@@ -307,7 +355,6 @@ exports.jobrules=[
       }
       {
         name:"商人"
-        title:"商人が入る配役。"
         rule:(number)->
           ret=normal1 number
           ret.Merchant=1
@@ -320,7 +367,6 @@ exports.jobrules=[
       rule:[
         {
           name:"変化村"
-          title:"役職が変化する。"
           minNumber:6
           rule:(number)->
             ret={}
@@ -370,7 +416,6 @@ exports.jobrules=[
         }
         {
           name:"黒い村"
-          title:"黒い。"
           minNumber:6
           rule:(number)->
             ret={}
@@ -437,7 +482,6 @@ exports.jobrules=[
         }
         {
           name:"女王村"
-          title:"女王観戦者のいる村。推奨人数:14〜16人。"
           minNumber:10
           suggestedOption:
             scapegoat:"no"
@@ -491,7 +535,6 @@ exports.jobrules=[
     rule:[
       {
         name:"狂った世界"
-        title:"狂人が多い。"
         rule:(number)->
           ret={}
           count=3
@@ -557,7 +600,6 @@ exports.jobrules=[
       }
       {
         name:"六つ巴人狼"
-        title:"6つの勢力がひしめく。"
         rule:(number)->
           ret={}
           ret.Diviner=1
@@ -601,20 +643,19 @@ exports.jobrules=[
           if number>=38
             ret.Vampire++
           ret
-            
-          
+
+
       }
     ]
   }
 ]
 # ルールオブジェクトを得る
-exports.getruleobj=(name)->
+getruleobj=(name)->
     # オブジェクトから探す
     if name=="特殊ルール.量子人狼"
         # 特殊だ!
         return {
             name:"量子人狼"
-            title:"全員の役職などが確率で表現される。村人・人狼・占い師のみ。"
             rule:null
             suggestedNight:{
                 max:60
@@ -653,1048 +694,988 @@ exports.getrulefunc=(name)->
             ret
 
     # ほかはオブジェクトから探す
-    ruleobj=exports.getruleobj name
+    ruleobj = getruleobj name
     return ruleobj?.rule
-# ルールの名前を書く
-exports.getrulestr=(rule,jobs={})->
-    text=""
-    if rule=="特殊ルール.闇鍋"
-        # 闇鍋の場合
-        return "闇鍋"
-    if rule=="特殊ルール.エンドレス闇鍋"
-        return "エンドレス闇鍋"
-    text="#{rule.split('.').pop()} / "
-
-    for job in Shared.game.jobs
-        continue if job=="Human" && rule=="特殊ルール.一部闇鍋" #一部闇鍋は村人部分だけ闇鍋
-        num=jobs[job]
-        continue unless parseInt num
-        text+="#{Shared.game.getjobname job}#{num} "
-    # さらにカテゴリ分も
-    for type,name of Shared.game.categoryNames
-        num=jobs["category_#{type}"]
-        if num>0
-            text+="#{name}#{num} "
-    return text
-# 職の名前
-exports.getjobname=(job)->
+# 職の情報
+exports.getjobobj = (job)->
     for name,team of Shared.game.jobinfo
         if team[job]?
-            return team[job].name
+            return team[job]
     return null
+
+# make team color map from jobinfo
+exports.makeTeamColors = ->
+    result = {}
+    for team, obj of Shared.game.jobinfo
+        result[team] = obj.color
+    result
+
+
+# jobinfo.name can now be removed
 exports.jobinfo=
     Human:
-        name:"村人陣営"
         color:"#00CC00"
         Human:
-            name:"村人"
             color:"#dddddd"
         Diviner:
-            name:"占い師"
             color:"#00b3ff"
         Psychic:
-            name:"霊能者"
             color:"#bb00ff"
         Guard:
-            name:"狩人"
             color:"#969ad4"
         Couple:
-            name:"共有者"
             color:"#ffffab"
         Poisoner:
-            name:"埋毒者"
             color:"#853c24"
         Noble:
-            name:"貴族"
             color:"#ffff00"
         Slave:
-            name:"奴隷"
             color:"#1417d9"
         Magician:
-            name:"魔術師"
             color:"#f03eba"
         Fugitive:
-            name:"逃亡者"
             color:"#e8b279"
         Merchant:
-            name:"商人"
             color:"#e06781"
         QueenSpectator:
-            name:"女王観戦者"
             color:"#faeebe"
         Liar:
-            name:"嘘つき"
             color:"#a3e4e6"
         Light:
-            name:"デスノート"
             color:"#2d158c"
         MadWolf:
-            name:"狂人狼"
             color:"#847430"
         ToughGuy:
-            name:"タフガイ"
             color:"#ff5900"
         Cursed:
-            name:"呪われた者"
             color:"#bda3bf"
         ApprenticeSeer:
-            name:"見習い占い師"
             color:"#bfecff"
         Diseased:
-            name:"病人"
             color:"#b35b98"
         Spellcaster:
-            name:"呪いをかける者"
             color:"#4b4f7d"
         Lycan:
-            name:"狼憑き"
             color:"#7d5f5f"
         Priest:
-            name:"聖職者"
             color:"#fff94a"
         Prince:
-            name:"プリンス"
             color:"#e5ff00"
         PI:
-            name:"超常現象研究者"
             color:"#573670"
         Cat:
-            name:"猫又"
             color:"#9200C7"
         Witch:
-            name:"魔女"
             color:"#9200C7"
         Oldman:
-            name:"老人"
             color:"#ede4b9"
         OccultMania:
-            name:"オカルトマニア"
             color:"#edda8c"
         Dog:
-            name:"犬"
             color:"#d4a152"
         Dictator:
-            name:"独裁者"
             color:"#ff0000"
         SeersMama:
-            name:"予言者のママ"
             color:"#ff9500"
         Trapper:
-            name:"罠師"
             color:"#b58500"
         RedHood:
-            name:"赤ずきん"
             color:"#ff2200"
         Counselor:
-            name:"カウンセラー"
             color:"#ff94d9"
         Miko:
-            name:"巫女"
             color:"#f5b8ca"
         HolyMarked:
-            name:"聖痕者"
             color:"#c4e8ff"
         WanderingGuard:
-            name:"風来狩人"
             color:"#16bf0d"
         TroubleMaker:
-            name:"トラブルメーカー"
             color:"#64b82c"
         FrankensteinsMonster:
-            name:"フランケンシュタインの怪物"
             color:"#4d3a03"
         BloodyMary:
-            name:"血まみれのメアリー"
             color:"#ee0000"
         King:
-            name:"王様"
             color:"#fcdd28"
         SantaClaus:
-            name:"サンタクロース"
             color:"#ff0000"
         Phantom:
-            name:"怪盗"
             color:"#f3f3f3"
         DrawGirl:
-            name:"看板娘"
             color:"#ffc796"
         Pyrotechnist:
-            name:"花火師"
             color:"#ff6a19"
         Baker:
-            name:"パン屋"
             color:"#fad587"
         SpiritPossessed:
-            name:"悪霊憑き"
             color:"#a196d1"
-        
+        Forensic:
+            color:"#d4e9fc"
+        Cosplayer:
+            color:"#69652b"
+        TinyGhost:
+            color:"#999999"
+        Ninja:
+            color:"#1f136d"
+        Twin:
+            color:"#dbfcff"
+        Hunter:
+            color:"#d11f1f"
+        Emma:
+            color:"#dd2211"
+        Idol:
+            color:"#ffcc55"
+        HomeComer:
+            color:"#bbeeee"
+        Illusionist:
+            color:"#ddaaee"
+        DragonKnight:
+            color:"#ef8b26"
+        Samurai:
+            color:"#000d80"
+        Elementaler:
+            color:"#46f17f"
+        Poet:
+            color:"#f1a0a2"
+        Sacrifice:
+            color:"#573f2b"
+        Oracle:
+            color:"#77c8ed"
+        GachaAddicted:
+            color:"#edb232"
+        Fate:
+            color:"#062a66"
+        Synesthete:
+            color:"#ffb6c1"
+        Reindeer:
+            color:"#917663"
+        Streamer:
+            color:"#c4302b"
+        Listener:
+            color:"#eefeff"
+        Tarzan:
+            color:"#b3925a"
+        Hitokotonushinokami:
+            color:"#e6e397"
+        RemoteWorker:
+            color:"#0e71eb"
+        Gambler:
+            color:"#edbd80"
+
     Werewolf:
-        name:"人狼陣営"
         color:"#DD0000"
         Werewolf:
-            name:"人狼"
             color:"#220000"
         Madman:
-            name:"狂人"
             color:"#ffbb00"
         BigWolf:
-            name:"大狼"
             color:"#660000"
         Spy:
-            name:"スパイ"
             color:"#ad5d28"
         WolfDiviner:
-            name:"人狼占い"
             color:"#5b0080"
         Spy2:
-            name:"スパイⅡ"
             color:"#d3b959"
         Fanatic:
-            name:"狂信者"
             color:"#94782b"
         Sorcerer:
-            name:"妖術師"
             color:"#b91be0"
         LoneWolf:
-            name:"一匹狼"
             color:"#222222"
         MinionSelector:
-            name:"子分選択者"
             color:"#ffffff"
         WolfCub:
-            name:"狼の子"
             color:"#662233"
         WhisperingMad:
-            name:"囁き狂人"
             color:"#ccab52"
         WolfBoy:
-            name:"狼少年"
             color:"#5b2266"
         GreedyWolf:
-            name:"欲張りな狼"
             color:"#910052"
         FascinatingWolf:
-            name:"誘惑する女狼"
             color:"#f200c2"
         SolitudeWolf:
-            name:"孤独な狼"
             color:"#a13f3f"
         ToughWolf:
-            name:"一途な狼"
             color:"#c47f35"
         ThreateningWolf:
-            name:"威嚇する狼"
             color:"#9e6f00"
         ObstructiveMad:
-            name:"邪魔狂人"
             color:"#d95e38"
         PsychoKiller:
-            name:"サイコキラー"
             color:"#1ee37d"
         CautiousWolf:
-            name:"慎重な狼"
             color:"#5c3716"
         Bomber:
-            name:"爆弾魔"
             color:"#cda764"
         Ushinotokimairi:
-            name:"丑刻参"
             color:"#c9563c"
         MadDog:
-            name:"狂犬"
             color:"#c21f1f"
         Hypnotist:
-            name:"催眠術師"
             color:"#e01bs9"
         CraftyWolf:
-            name:"狡猾な狼"
             color:"#4a03ad"
         Pumpkin:
-            name:"かぼちゃ魔"
             color:"#ffb042"
         MadScientist:
-            name:"マッドサイエンティスト"
             color:"#14e051"
-        
-        
+        MadHunter:
+            color:"#511e0f"
+        MadCouple:
+            color:"#f2d5bc"
+        EyesWolf:
+            color:"#000a75"
+        TongueWolf:
+            color:"#912d5b"
+        BlackCat:
+            color:"#38004c"
+        LurkingMad:
+            color:"#937930"
+        DecoyWolf:
+            color:"#cc8f2e"
+        Satori:
+            color:"#f9cad9"
+        AbsoluteWolf:
+            color:"#ff7f50"
+        QueenOfNight:
+            color:"#f7f8f0"
+        CurseWolf:
+            color:"#484366"
+        IntuitionWolf:
+            color:"#fcac07"
+        Faker:
+            color:"#8a7458"
+        SealWolf:
+            color:"#333366"
+        CynthiaWolf:
+            color:"#dc143c"
+
     Fox:
-        name:"妖狐陣営"
         color:"#934293"
         Fox:
-            name:"妖狐"
             color:"#934293"
         TinyFox:
-            name:"子狐"
             color:"#dd81f0"
         Immoral:
-            name:"背徳者"
             color:"#5c2f5c"
         Blasphemy:
-            name:"冒涜者"
             color:"#802060"
-            
-        
-    Devil:
-        name:"悪魔くん"
-        color:"#735f9e"
-        Devil:
-            name:"悪魔くん"
-            color:"#735f9e"
+        XianFox:
+            color:"#edd5ed"
+        NightRabbit:
+            color:"#202f55"
+
     Friend:
-        name:"恋人陣営"
         color:"#ffb5e5"
         Cupid:
-            name:"キューピッド"
             color:"#ffb5e5"
         Lover:
-            name:"求愛者"
             color:"#ffcfee"
         BadLady:
-            name:"悪女"
             color:"#cf0085"
         Patissiere:
-            name:"パティシエール"
             color:"#ab5f30"
+        SnowLover:
+            color:"#f6ceff"
+        LunaticLover:
+            color:"#b30000"
+    Devil:
+        color:"#735f9e"
+        Devil:
+            color:"#735f9e"
     Vampire:
-        name:"ヴァンパイア陣営"
         color:"#8f00bf"
         Vampire:
-            name:"ヴァンパイア"
             color:"#8f00bf"
+        Dracula:
+            color:"#2d00b7"
+        VampireClan:
+            color:"#c77ed0"
+    Cult:
+        color: "#b09d87"
+        CultLeader:
+            color:"#b09d87"
+    Raven:
+        color: "#444466"
+        Raven:
+            color: "#444466"
+        Ascetic:
+            color:"#435066"
+    Hooligan:
+        color: "#f39800"
+        Hooligan:
+            color: "#ff5900"
+    Lorelei:
+        color: "#b51b70"
+        Lorelei:
+            color: "#b51b70"
     Others:
-        name:"その他"
         color:"#cccccc"
         Bat:
-            name:"こうもり"
             color:"#000066"
         Stalker:
-            name:"ストーカー"
             color:"#ad6628"
         Doppleganger:
-            name:"ドッペルゲンガー"
             color:"#bbbbbb"
-        CultLeader:
-            name:"カルトリーダー"
-            color:"#b09d87"
         Copier:
-            name:"コピー"
             color:"#ffffff"
         Tanner:
-            name:"皮なめし職人"
             color:"#ede4b9"
         Thief:
-            name:"盗人"
             color:"#a4a4a4"
         Hoodlum:
-            name:"ならず者"
             color:"#88002d"
         QuantumPlayer:
-            name:"量子人間"
             color:"#eeeeee"
         Shishimai:
-            name:"獅子舞"
             color:"#2c8c3e"
+        Amanojaku:
+            color:"#b09ca8"
+        DarkClown:
+            color:"#444434"
+        DualPersonality:
+            color:"#9db699"
     Neet:
-        name:"ニート"
         color:"#aaaaaa"
         Neet:
-            name:"ニート"
             color:"#aaaaaa"
-# 設定項目
-exports.rules=[
+
+# TODO temporal new version
+exports.new_rules=[
     # 闇鍋関係
     {
-        label:"闇鍋オプション"
-        visible:(rule,jobs)->rule.jobrule in ["特殊ルール.闇鍋","特殊ルール.一部闇鍋","特殊ルール.エンドレス闇鍋"]
-        rules:[
+        type: 'group'
+        label:
+            id: 'yaminabe_option'
+            visible: (rule)->
+                # 闇鍋モードのみ
+                (rule.casting ? rule.jobrule) in ["特殊ルール.闇鍋","特殊ルール.一部闇鍋","特殊ルール.エンドレス闇鍋"]
+        items: [
             {
-                name:"yaminabe_safety"
-                label:"闇鍋セーフティ"
-                title:"配役にどれくらい気をつけるか指定します。"
-                type:"select"
-                values:[
-                    {
-                        value:"supersuper"
-                        label:"走召（α2）"
-                        title:"強さのバランスを調整するかもしれません。"
-                    }
-                    {
-                        value:"super"
-                        label:"超(β2)"
-                        title:"強さのバランスを調整します。"
-                    }
-                    {
-                        value:"high"
-                        label:"高"
-                        title:"出現役職どうしの兼ね合いも考慮します。"
-                    }
-                    {
-                        value:"middle"
-                        label:"中"
-                        title:"各陣営の割合を調整します。"
-                    }
-                    {
-                        value:"low"
-                        label:"低"
-                        title:"人狼・妖狐の数をちょうどいい数に調整します。"
-                        selected:true
-                    }
-                    {
-                        value:"none"
-                        label:"なし"
-                        title:"まったく気をつけません。人狼系1が保証される以外は全てランダムです。"
-                    }
-                    {
-                        value:"reverse"
-                        label:"逆（α）"
-                        title:"クソゲーになりますが、人外数の調整は行われます。"
-                    }
-                ]
+                type: 'item'
+                value:
+                    type: 'select'
+                    id: 'yaminabe_safety'
+                    defaultValue: 'low'
+                    values:[
+                        "supersuper"
+                        "super"
+                        "high"
+                        "middle"
+                        "lowlow"
+                        "low"
+                        "none"
+                        "reverse"
+                    ]
+            }
+        ]
+    }
+    # 配役表示
+    {
+        type: 'group'
+        label:
+            id: 'show_roles_option'
+            visible: (rule, isEditor)->
+                if !isEditor && rule.rules.get('yaminabe_hidejobs') != 'team'
+                    # ルール表示時で配役がチームのみの設定でない場合は隠す
+                    return false
+                return true if isAllJobsMode(rule)
+                if isEditor && rule.rules.get('yaminabe_hidejobs') != 'team'
+                    return false
+                for job in ["Vampire","Devil","CultLeader"]
+                    if rule.jobNumbers[job]>0
+                        return true
+                return false
+        items: [
+            {
+                type: 'item'
+                value:
+                    type: 'checkbox'
+                    id: 'hide_singleton_teams'
+                    defaultChecked: false
+                    value: 'on'
             }
         ]
     }
     # 標準ルール
     {
-        label:null
-        visible:->true
-        rules:[
+        type: 'group'
+        label:
+            id: 'normal_rules'
+            visible:->true
+        items: [
             {
-                name:"decider"
-                label:"決定者"
-                title:"昼の処刑投票のときに、同数の場合決定者が投票した人が優先されます。誰が決定者かは分かりません。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type: 'checkbox'
+                    id: 'decider'
+                    defaultChecked: false
+                    value: '1'
+            }
+            {
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"authority"
+                    defaultChecked: false
                     value:"1"
-                    label:"あり"
-                }
             }
             {
-                name:"authority"
-                label:"権力者"
-                title:"昼の処刑投票のときに投票が2票分になります。誰が権力者かは分かりません。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"deathnote"
+                    defaultChecked: false
                     value:"1"
-                    label:"あり"
-                }
             }
             {
-                name:"deathnote"
-                label:"死神の手帳"
-                title:"毎晩死神の手帳が移動します。死神の手帳を持った人は一人殺すことができます。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"wolfminion"
+                    defaultChecked: false
                     value:"1"
-                    label:"あり"
-                }
             }
             {
-                name:"wolfminion"
-                label:"狼の子分"
-                title:"初日の夜に人狼が狼の子分を指定します。狼の子分になった場合能力はそのままで人狼陣営になります。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"drunk"
+                    defaultChecked: false
                     value:"1"
-                    label:"あり"
-                }
             }
             {
-                name:"drunk"
-                label:"酔っ払い"
-                title:"誰かが酔っ払いになります。酔っ払いは3日目の夜まで自分が村人だと思い込んでいます。"
-                type:"checkbox"
-                value:{
-                    value:"1"
-                    label:"あり"
-                }
+                type: 'item'
+                value:
+                    type:"separator"
             }
             {
-                type:"separator"
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"scapegoat"
+                    defaultValue: 'on'
+                    values: [
+                        "on"
+                        "off"
+                        "no"
+                    ]
             }
             {
-                name:"scapegoat"
-                label:"身代わりくん"
-                title:"身代わりくんは1日目の夜に殺されるためのNPCです。"
-                type:"select"
-                values: [
-                    {
-                        value:"on"
-                        label:"あり"
-                        selected:true
-                    }
-                    {
-                        value:"off"
-                        label:"なし（参加者が死ぬ）"
-                    }
-                    {
-                        value:"no"
-                        label:"なし（誰も死なない）"
-                    }
-                ]
+                type: 'item'
+                value:
+                    type:"separator"
             }
             {
-                type:"separator"
+                type: 'item'
+                value:
+                    type:"time"
+                    id: 'day'
+                    defaultValue: 330
+                    disabled:(rule)->
+                        rule.rules.get('dynamic_day_time') == 'on'
             }
             {
-                type:"time"
-                name:
-                    minute:"day_minute"
-                    second:"day_second"
-                label:"昼"
-                defaultValue:
-                    minute:5
-                    second:30
-                getstr:->null
+                type: 'item'
+                value:
+                    type:"time"
+                    id: 'night'
+                    defaultValue: 150
             }
             {
-                type:"time"
-                name:
-                    minute:"night_minute"
-                    second:"night_second"
-                label:"夜"
-                defaultValue:
-                    minute:2
-                    second:30
-                getstr:->null
+                type: 'item'
+                value:
+                    type:"time"
+                    id: 'remain'
+                    defaultValue: 120
+                    minValue: 60
             }
             {
-                type:"time"
-                name:
-                    minute:"remain_minute"
-                    second:"remain_second"
-                label:"猶予"
-                defaultValue:
-                    minute:2
-                    second:0
-                getstr:->null
+                type: 'item'
+                value:
+                    type:"time"
+                    id: 'voting'
+                    defaultValue: 0
             }
             {
-                type:"separator"
+                type: 'item'
+                value:
+                    type:"separator"
             }
             {
-                name:"will"
-                label:"遺言"
-                title:"遺言が有効な場合各参加者は遺言を設定することができ、死んだ際に公開されます。"
-                type:"checkbox"
-                value:{
-                    value:"die"
-                    label:"あり"
-                    nolabel:"なし"
-                    checked:true
-                }
-            }
-            {
-                name:"heavenview"
-                label:"霊界表示"
-                title:"ありの場合、霊界で役職一覧が見られ、夜の発言なども全て見ることができます。"
-                type:"select"
-                values:[
-                    {
-                        # ""なのは歴史的経緯
-                        value:"view"
-                        label:"常にあり"
-                        title:"蘇生役職が存在する場合でも常に公開します。"
-                    }
-                    {
-                        value:"norevive"
-                        label:"あり"
-                        title:"表示しますが、誰かが蘇生する可能性がある場合は表示しません。"
-                        selected:true
-                    }
-                    {
-                        value:""
-                        label:"なし"
-                        title:"ゲーム終了まで非公開にします。"
-                    }
-                ]
-            }
-            {
-                name:"votemyself"
-                label:"昼は自分に投票できる"
-                type:"checkbox"
-                value:{
-                    value:"ok"
-                    label:"あり"
-                    nolabel:"なし"
-                }
-                getstr:(value)->
-                    {
-                        label:"自分投票"
-                        value:if value=="ok" then "あり" else "なし"
-                    }
-            }
-            {
-                name:"waitingnight"
-                label:"夜は時間切れまで待つ"
-                type:"hidden"
-                value:{
-                    value:"wait"
-                    label:"あり"
-                    nolabel:"なし"
-                }
-            }
-            {
-                name:"safety"
-                label:"身代わりセーフティ"
-                title:"「なし」や「なんでもあり」にすると身代わりくんが人狼になったりします。"
-                type:"select"
-                values:[
-                    {
-                        value:"full"
-                        label:"あり"
-                        selected:true
-                    }
-                    {
-                        value:"no"
-                        label:"なし"
-                    }
-                    {
-                        value:"free"
-                        label:"なんでもあり"
-                    }
-                ]
-            }
-            {
-                type:"separator"
-            }
-            {
-                name:"noticebitten"
-                label:"噛まれたら分かる"
-                title:"人狼に襲われたときに襲われた側に知らせます。"
-                type:"checkbox"
-                value:{
-                    value:"notice"
-                    label:"あり"
-                    nolabel:"なし"
-                }
-                getstr:(value)->
-                    {
-                        label:"襲撃された通知"
-                        value:if value=="notice" then "あり" else "なし"
-                    }
-            }
-            {
-                name:"GMpsychic"
-                label:"GM霊能"
-                title:"ありにすると、処刑された人の霊能結果が全員に公開されます。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"dynamic_day_time"
+                    defaultChecked: false
                     value:"on"
-                    label:"あり"
-                    nolabel:"なし"
-                }
             }
             {
-                name:"silentrule"
-                label:"秒ルール"
-                backlabel:true  # 後ろに
-                title:"1以上にすると、朝になってからその時間の間は発言できません。"
-                type:"second"
-                defaultValue:{
-                    value:0
-                }
-                getstr:(value)->
-                    if value==0
-                        return null
-                    else
-                        return {
-                            label:null
-                            value:"#{value}秒ルール"
+                type: 'item'
+                value:
+                    type:"integer"
+                    id:"dynamic_day_time_factor"
+                    defaultValue: 30
+                    minValue: 10
+                    step: 5
+                    value:"on"
+                    disabled:(rule)->
+                        rule.rules.get('dynamic_day_time') != 'on'
+                    getstr:(t, value)->
+                        {
+                            value:
+                                if !value
+                                    t('rules:common.none')
+                                else
+                                    value + t('rules:common.seconds')
                         }
             }
             {
-                name:"runoff"
-                label:"決選投票"
-                title:"ありの場合、上位候補で決選投票を行います。"
-                type:"select"
-                values:[
-                    {
-                        value:"no"
-                        label:"なし"
-                        selected:true
-                    }
-                    {
-                        value:"revote"
-                        label:"再投票時"
-                    }
-                    {
-                        value:"yes"
-                        label:"常に行う"
-                    }
-                ]
+                type: 'item'
+                value:
+                    type:"separator"
             }
             {
-                type: "separator"
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"will"
+                    defaultChecked: true
+                    value:"die"
+            }
+            {
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"heavenview"
+                    defaultValue: 'norevive'
+                    values:[
+                        "view"
+                        "norevive"
+                        # ""なのは歴史的経緯
+                        ""
+                    ]
+            }
+            {
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"votemyself"
+                    value:"ok"
+            }
+            {
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"voteresult"
+                    value:"hide"
+            }
+            {
+                type: 'item'
+                value:
+                    type:"hidden"
+                    id:"waitingnight"
+                    value: "wait"
+            }
+            {
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"safety"
+                    defaultValue: 'full'
+                    values:[
+                        "full"
+                        "no"
+                        "free"
+                    ]
+                    getOptionStr: (t, value)->
+                        {
+                            label: t("rules:rule.safety.labels.#{value}")
+                            description: t("rules:rule.safety.descriptions.#{value}", {
+                                safety_excluded_jobs: SAFETY_EXCLUDED_JOBS.map((job)-> t("roles:jobname.#{job}")).join("、")
+                            })
+                        }
+            }
+            {
+                type: 'item'
+                value:
+                    type:"separator"
+            }
+            {
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"noticebitten"
+                    value:"notice"
+            }
+            {
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"GMpsychic"
+                    value:"on"
+            }
+            {
+                type: 'item'
+                value:
+                    type:"integer"
+                    id:"silentrule"
+                    defaultValue: 0
+                    minValue: 0
+                    getstr:(t, value)->
+                        {
+                            value:
+                                if !value
+                                    t('rules:common.none')
+                                else
+                                    value + t('rules:common.seconds')
+                        }
+            }
+            {
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"runoff"
+                    defaultValue: 'no'
+                    values:[
+                        "no"
+                        "revote"
+                        "yes"
+                    ]
+            }
+            {
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"drawvote"
+                    defaultValue: 'revote'
+                    values:[
+                        "revote"
+                        "random"
+                        "none"
+                        "all"
+                    ]
+            }
+            {
+                type: 'item'
+                value:
+                    type: "separator"
             }
             {
                 # 名前がyaminabeなのは歴史的経緯
-                name:"yaminabe_hidejobs"
-                label:"配役公開"
-                title:"配役の公開方法を指定します。"
-                type:"select"
-                values:[
-                    {
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"yaminabe_hidejobs"
+                    defaultValue: ''
+                    values:[
                         # ""なのは歴史的経緯
-                        value:""
-                        label:"役職一覧を公開"
-                        title:"ゲーム開始時、出現役職の一覧が公開されます。"
-                        selected:true
-                    }
-                    {
-                        value:"team"
-                        label:"陣営ごとの数のみ公開"
-                        title:"各陣営の数のみ公開されます。"
-                    }
-                    {
-                        value:"1"
-                        label:"非公開"
-                        title:"出現役職の一覧は分からなくなります。"
-                    }
-                ]
+                        ""
+                        "team"
+                        "2"
+                    ]
             }
             {
-                name:"losemode"
-                label:"敗北村"
-                title:"負けることを目指す人狼です。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"losemode"
                     value:"on"
-                    label:"あり"
-                }
             }
             {
-                name:"rolerequest"
-                label:"希望役職制"
-                title:"各参加者はなりたい役職を選択できます。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"rolerequest"
                     value:"on"
-                    label:"あり"
-                }
             }
             {
-                name:"chemical"
-                label:"ケミカル人狼"
-                title:"1人につき役職が2つ割り当てられる特殊ルールです。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"chemical"
                     value:"on"
-                    label:"あり"
-                }
             }
         ]
     }
     # 人狼系
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            for job in exports.categories.Werewolf
-                if jobs[job]>0
-                    return true
-            return false
-        rules:[
+        type: 'group'
+        label:
+            id: "werewolf"
+            visible: (rule)->
+                return true if isAllJobsMode rule
+                for job in exports.categories.Werewolf
+                    if rule.jobNumbers[job]>0
+                        return true
+                return false
+        items:[
             {
-                name:"wolfsound"
-                label:"人狼の遠吠えが聞こえる"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"wolfsound"
+                    defaultChecked: true
                     value:"aloud"
-                    label:"あり"
-                    nolabel:"なし"
-                    checked:true
-                }
-                getstr:(value)->
-                    {
-                        label:"人狼の遠吠え"
-                        value:if value=="aloud" then "聞こえる" else "聞こえない"
-                    }
             }
             {
-                name:"wolfattack"
-                label:"人狼は人狼を襲撃対象に選択できる"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"wolfattack"
                     value:"ok"
-                    label:"あり"
-                }
-                getstr:(value)->
-                    if value=="ok"
-                        {
-                            label:null
-                            value:"人狼は人狼を襲撃対象に選択できる"
-                        }
-                    else
-                        null
             }
         ]
     }
     # 占い系
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            for job in ["Diviner","WolfDiviner","TinyFox"]
-                if jobs[job]>0
-                    return true
-            return false
-        rules:[
+        type: 'group'
+        label:
+            id: 'diviner'
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                for job in ["Diviner","ApprenticeSeer","WolfDiviner","TinyFox"]
+                    if rule.jobNumbers[job]>0
+                        return true
+                return false
+        items:[
             {
-                name:"divineresult"
-                label:"占い結果"
-                title:"夜に行った占いの結果が表示されるタイミングを調整できます。"
-                type:"select"
-                values:[
-                    {
-                        value:"immediate"
-                        label:"すぐ分かる"
-                    }
-                    {
-                        value:"sunrise"
-                        label:"翌朝分かる"
-                        selected:true
-                    }
-                ]
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"divineresult"
+                    defaultValue: 'sunrise'
+                    values:[
+                        "immediate"
+                        "sunrise"
+                    ]
+            }
+            {
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"firstnightdivine"
+                    defaultValue: 'manual'
+                    values:[
+                        "auto"
+                        "manual"
+                    ]
             }
         ]
     }
     # 霊能
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            return jobs.Psychic>0
-        rules:[
+        type: 'group'
+        label:
+            id: 'psychic'
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                return rule.jobNumbers.Psychic>0
+        items:[
             {
-                name:"psychicresult"
-                label:"霊能結果"
-                title:"夜に行った霊能の結果が表示されるタイミングを調整できます。"
-                type:"select"
-                values:[
-                    {
-                        value:"sunset"
-                        label:"すぐ分かる"
-                    }
-                    {
-                        value:"sunrise"
-                        label:"翌朝分かる"
-                        selected:true
-                    }
-                ]
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"psychicresult"
+                    defaultValue: 'sunrise'
+                    values:[
+                        "sunset"
+                        "sunrise"
+                    ]
             }
         ]
     }
     # 共有者
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            return jobs.Couple>0
-        rules:[
+        type: 'group'
+        label:
+            id: 'couple'
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                return rule.jobNumbers.Couple>0 || rule.jobNumbers.MadCouple>0
+        items:[
             {
-                name:"couplesound"
-                label:"共有者の小声が聞こえる"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"couplesound"
                     value:"aloud"
-                    label:"あり"
-                    nolabel:"なし"
-                }
-                getstr:(value)->
-                    {
-                        label:"共有者の小声"
-                        value:if value=="aloud" then "聞こえる" else "聞こえない"
-                    }
             }
         ]
     }
     # 護衛役職
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            for job in ["Guard","Trapper","WanderingGuard"]
-                if jobs[job]>0
-                    return true
-            return false
-        rules:[
+        type: 'group'
+        label:
+            id: 'guard'
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                for job in ["Guard","Trapper","WanderingGuard","Cosplayer"]
+                    if rule.jobNumbers[job]>0
+                        return true
+                return false
+        items:[
             {
-                name:"guardmyself"
-                label:"狩人は自分を守れる"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"guardmyself"
                     value:"ok"
-                    label:"あり"
-                }
-                getstr:(value)->
-                    {
-                        label:"狩人の自分護衛"
-                        value:if value=="ok" then "あり" else "なし"
-                    }
             }
             {
-                name:"gjmessage"
-                label:"護衛成功が分かる"
-                title:"ありにすると、狩人が護衛成功したときに狩人にメッセージが表示されます。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"gjmessage"
                     value:"on"
-                    label:"あり"
-                }
-                getstr:(value)->
-                    {
-                        label:"護衛成功通知"
-                        value:if value=="on" then "あり" else "なし"
-                    }
+            }
+            {
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"consecutiveguard"
+                    defaultValue: 'yes'
+                    values:[
+                        "yes"
+                        "no"
+                    ]
             }
         ]
     }
     # 妖狐
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            return jobs.Fox>0
-        rules:[
+        type: 'group'
+        label:
+            id: "fox"
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                return rule.jobNumbers.Fox>0
+        items:[
             {
-                name:"deadfox"
-                label:"呪殺は襲撃と区別がつく"
-                title:"有効な場合、妖狐が呪殺されたときのログが狼の襲撃と異なるようになります。"
-                type:"checkbox"
+                type: 'item'
                 value:
+                    type:"checkbox"
+                    id:"deadfox"
                     value:"obvious"
-                    label:"あり"
-                    nolabel:"なし"
-                getstr:(value)->
-                    {
-                        label:"呪殺ログと襲撃ログの区別"
-                        value:if value=="on" then "あり" else "なし"
-                    }
+            }
+        ]
+    }
+    # ハンター
+    {
+        type: 'group'
+        label:
+            id: 'hunter'
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                return rule.jobNumbers.Hunter > 0 || rule.jobNumbers.MadHunter > 0
+        items:[
+            {
+                type: 'item'
+                value:
+                    type: "select"
+                    id:"hunter_lastattack"
+                    defaultValue: 'yes'
+                    values:[
+                        "yes"
+                        "no"
+                    ]
             }
         ]
     }
     # 埋毒者、猫又
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            return jobs.Poisoner>0 || jobs.Cat>0
-        rules:[
+        type: 'group'
+        label:
+            id: 'poison'
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                return rule.jobNumbers.Poisoner>0 || rule.jobNumbers.Cat>0
+        items:[
             {
-                name: "poisonwolf"
-                label: "人狼の毒持ち襲撃"
-                title: "人狼が埋毒者・猫又を襲撃した場合の動作を設定します。"
-                type: "select"
-                values:[
-                    {
-                        value: "selector"
-                        label: "襲撃者を道連れ"
-                        selected: true
-                    }
-                    {
-                        value: ""
-                        label: "ランダムに道連れ"
-                    }
-                ]
+                type: 'item'
+                value:
+                    type: "select"
+                    id: "poisonwolf"
+                    defaultValue: 'selector'
+                    values:[
+                        "selector"
+                        ""
+                    ]
             }
         ]
     }
     # 恋人
     {
-        label:null
-        visible:(rule,jobs)->
-            return true if isYaminabe rule
-            return jobs.Lover>0 || jobs.Cupid>0
-        rules:[
+        type: 'group'
+        label:
+            id: 'lover'
+            visible:(rule)->
+                return true if isAllJobsMode rule
+                for job in ["Cupid","Lover","BadLady","Patissiere"]
+                    if rule.jobNumbers[job]>0
+                        return true
+                return false
+        items:[
             {
-                name:"friendsjudge"
-                label:"恋人陣営の勝利条件"
-                type:"select"
-                values:[
-                    {
-                        value:"alive"
-                        label:"終了時に生存"
-                        title:"妖狐と同じです。"
-                        selected:true
-                    }
-                    {
-                        value:"ruin"
-                        label:"恋人だけ生存"
-                    }
-                ]
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"friendsjudge"
+                    defaultValue: 'alive'
+                    values:[
+                        "alive"
+                        "ruin"
+                    ]
             }
             {
-                name:"friendssplit"
-                label:"恋人はそれぞれ独立する"
-                title:"恋人が複数組できた場合、勝利条件と後追いが恋人全体ではなく組ごとになります。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"friendssplit"
+                    defaultChecked: true
                     value:"split"
-                    label:"あり"
-                    checked:true
-                }
-                getstr:(value)->
-                    {
-                        label:"恋人の独立"
-                        value:if value=="split" then "あり" else "なし"
-                    }
             }
         ]
     }
     # 量子人狼
     {
-        label:null
-        visible:(rule,jobs)->rule.jobrule=="特殊ルール.量子人狼"
-        rules:[
+        type: 'group'
+        label:
+            id: 'quantum'
+            visible:(rule)->rule.casting=="特殊ルール.量子人狼"
+        items:[
             {
-                name:"quantumwerewolf_table"
-                label:"確率表"
-                type:"select"
-                values:[
-                    {
-                        value:"open"
-                        label:"プレイヤー名を表示"
-                        selected:true
-                    }
-                    {
-                        value:"anonymous"
-                        label:"プレイヤー番号を表示"
-                        title:"自分以外のプレイヤー番号は分かりません。"
-                    }
-                ]
+                type: 'item'
+                value:
+                    type:"select"
+                    id:"quantumwerewolf_table"
+                    defaultValue: 'open'
+                    values:[
+                        "open"
+                        "anonymous"
+                    ]
             }
             {
-                name:"quantumwerewolf_dead"
-                label:"死亡率を表示しない"
-                title:"確率表に死亡率を表示しないルールです。表示するのが普通です。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"quantumwerewolf_dead"
                     value:"no"
-                    label:"あり"
-                    nolabel:"なし"
-                }
             }
             {
-                name:"quantumwerewolf_diviner"
-                label:"占い師の確率も表示する"
-                title:"確率表に占い師の確率も表示します。表示しないのが普通のルールです。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"quantumwerewolf_diviner"
                     value:"on"
-                    label:"あり"
-                    nolabel:"なし"
-                }
             }
             {
-                name:"quantumwerewolf_firstattack"
-                label:"初日の襲撃"
-                title:"ありの場合初日から襲撃対象を選択します。"
-                type:"checkbox"
-                value:{
+                type: 'item'
+                value:
+                    type:"checkbox"
+                    id:"quantumwerewolf_firstattack"
                     value:"on"
-                    label:"あり"
-                    nolabel:"なし"
-                }
             }
         ]
     }
@@ -1702,73 +1683,75 @@ exports.rules=[
 # 情報表示(makejobinfoで付加するやつ)
 exports.jobinfos=[
     {
+        name:"supporting"
+    }
+    {
         name:"wolves"
-        prefix:"仲間の人狼は"
-        type:"pubinfo-array"
+    }
+    {
+        name:"vampires"
     }
     {
         name:"peers"
-        prefix:"共有者は"
-        type:"pubinfo-array"
+    }
+    {
+        name:"madpeers"
     }
     {
         name:"foxes"
-        prefix:"仲間の妖狐は"
-        type:"pubinfo-array"
     }
     {
         name:"nobles"
-        prefix:"貴族は"
-        type:"pubinfo-array"
     }
     {
         name:"queens"
-        prefix:"女王観戦者は"
-        type:"pubinfo-array"
     }
     {
         name:"spy2s"
-        prefix:"スパイⅡは"
-        type:"pubinfo-array"
     }
     {
         name:"friends"
-        prefix:"恋人は"
-        type:"pubinfo-array"
     }
     {
         name:"stalking"
-        prefix:"あなたは"
-        suffix:"のストーカーです"
-        type:"pubinfo"
     }
     {
         name:"cultmembers"
-        prefix:"信者は"
-        type:"pubinfo-array"
-    }
-    {
-        name:"supporting"
-        suffix:"をサポートしています"
-        type:"pubinfo+job-array"
     }
     {
         name:"dogOwner"
-        prefix:"あなたの飼い主は"
-        suffix:"です"
-        type:"pubinfo"
     }
     {
         name:"quantumwerewolf_number"
-        prefix:"あなたのプレイヤー番号は"
-        suffix:"番です"
-        type:"raw"
     }
     {
         name:"watchingfireworks",
-        type:"hidden"
+    }
+    {
+        name:"twins"
+    }
+    {
+        name:"myfans"
+    }
+    {
+        name:"fanof"
+    }
+    {
+        name:"ravens"
+    }
+    {
+        name:"hooligans"
+    }
+    {
+        name:"loreleis"
     }
 ]
 
-# 判定
-isYaminabe=(rule)->rule.jobrule in ["特殊ルール.闇鍋","特殊ルール.一部闇鍋"]
+# 全ての役職が現れる可能性があるモードかどうか
+isAllJobsMode=(rule)->
+   if (rule.casting ? rule.jobrule) in ["特殊ルール.闇鍋","特殊ルール.一部闇鍋","特殊ルール.エンドレス闇鍋", "特殊ルール.easyYaminabe"]
+       return true
+   if rule.rules.get("yaminabe_hidejobs") != ""
+       # 役職が隠されている場合もtrue
+       return true
+   return false

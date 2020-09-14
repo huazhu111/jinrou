@@ -1,27 +1,22 @@
-exports.start=->
-	form=$("#newroomform")
-	# sessionStorageにルーム情報があったらそれを適用する
-	if sessionStorage.savedRule
-		# まだ消さない（部屋作成後も使用）
-		f=form.get 0
-		rule=JSON.parse sessionStorage.savedRule
-		f.elements["blind"].value=rule.blind
-		f.elements["ownerGM"].value= if rule.gm then "yes" else ""
-		f.elements["number"].value=rule.maxnumber ? 30
-		
-	$("#newroomform").submit (je)->
-		je.preventDefault()
-		form=je.target
-		# 作成
-		query=Index.util.formQuery form
-		ss.rpc "game.rooms.newRoom", query,(result)->
-			if result?.error?
-				Index.util.message "エラー",result.error
-				return
-			Index.app.showUrl "/room/#{result.id}"
+app = require '/app'
+newroom_view = null
+exports.start = ({themes})->
+    pi18n = app.getI18n()
+    papp = JinrouFront.loadNewRoom()
+    Promise.all([pi18n, papp]).then ([i18n, japp])->
+        newroom_view = japp.place {
+            i18n: i18n
+            node: $("#newroom-app").get 0
+            themes: themes
+            onCreate: (query)->
+                new Promise (resolve, reject)->
+                    ss.rpc "game.rooms.newRoom", query, (result)->
+                        if result?.error?
+                            reject result.error
+                        else
+                            Index.app.showUrl "/room/#{result.id}"
+                            resolve()
+        }
 
-	.change (je)->
-		ch=je.target
-		if ch.name=="usepassword"
-			$("#newroomform").get(0).elements["password"].disabled = !ch.checked
-	
+exports.end = ->
+    newroom_view?.unmount()

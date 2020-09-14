@@ -1,19 +1,35 @@
 tabs=
     blacklist:
         init:->
-            initblisttable()
+            unless blistpage?
+                blistpage = 0
+            initblisttable(blistpage)
             $("#newbanform").submit (je)->
                 je.preventDefault()
                 query=Index.util.formQuery je.target
                 ss.rpc "admin.addBlacklist", query,->
-                    inittable()
+                    initblisttable(blistpage)
             $("#blacklisttable").click (je)->
                 target=je.target
-                if target.dataset.userid
+                if target.dataset.banid
                     query=
-                        userid:target.dataset.userid
+                        id: target.dataset.banid
                     ss.rpc "admin.removeBlacklist", query,->
-                        inittable()
+                        initblisttable(blistpage)
+                else if target.dataset.setbanid
+                    query=
+                        id: target.dataset.setbanid
+                    ss.rpc "admin.restoreBlacklist", query, ->
+                        initblisttable(blistpage)
+            $("#blistpager").click (je)->
+                t=je.target
+                if t.name=="prev"
+                    blistpage--
+                    if blistpage<0 then blistpage=0
+                    initblisttable(blistpage)
+                else if t.name=="next"
+                    blistpage++
+                    initblisttable(blistpage)
     grandalert:
         init:->
             $("#alertform").submit (je)->
@@ -64,7 +80,7 @@ tabs=
 
 
 exports.start=->
-    Index.util.prompt "管理ページ","管理パスワードを入力して下さい",{type:"password"},(pass)->
+    Index.util.prompt "管理ページ","管理パスワードを入力してください",{type:"password"},(pass)->
         ss.rpc "admin.register", {password:pass},(err)->
             if err?
                 Index.util.message "管理ページ",err
@@ -81,33 +97,54 @@ exports.start=->
     
 exports.end=->
 
-initblisttable=->
+initblisttable=(page=0)->
     table=$("#blacklisttable").get 0
-    ss.rpc "admin.getBlacklist", {},(result)->
+    ss.rpc "admin.getBlacklist", {page:page},(result)->
         if result.error?
             Index.util.message "管理ページ",result.error
             return
+        $("span#page").text result.page+1
+        $("span#total").text result.total
         $(table).empty()
         result.docs.forEach (doc)->
             row=table.insertRow -1
             cell=row.insertCell 0
-            a=document.createElement "a"
-            a.href="/user/#{doc.userid}"
-            a.textContent=doc.userid
-            cell.appendChild a
+            if Array.isArray doc.userid
+                cell.textContent = doc.userid.join ", "
+            else
+                cell.textContent = doc.userid
             
             cell=row.insertCell 1
-            cell.textContent=doc.ip
+            if Array.isArray doc.ip
+                cell.textContent = doc.ip.join ", "
+            else
+                cell.textContent = doc.ip
             
             cell=row.insertCell 2
-            cell.textContent=doc.expires?.toLocaleString() ? "無期限"
+            cell.textContent=(if doc.expires? then new Date(doc.expires).toLocaleString() else "無期限")
             
             cell=row.insertCell 3
-            input=document.createElement "input"
-            input.type="button"
-            input.dataset.userid=doc.userid
-            input.value="解除"
-            cell.appendChild input
+            cell.textContent= doc.types?.join(", ")
+
+            cell=row.insertCell 4
+            cell.textContent= doc.reason
+
+            cell=row.insertCell 5
+            if doc.forgiveDate?
+                cell.textContent = "解除済"
+                input=document.createElement "input"
+                input.type="button"
+                input.dataset.setbanid=doc.id
+                input.value="再設定"
+                cell.appendChild input
+            else if not doc.id?
+                cell.textContent = "解除不可"
+            else
+                input=document.createElement "input"
+                input.type="button"
+                input.dataset.banid=doc.id
+                input.value="解除"
+                cell.appendChild input
     
 initnewstable=->
     table=$("#newstable").get 0
