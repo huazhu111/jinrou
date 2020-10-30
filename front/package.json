@@ -54,7 +54,10 @@
     "@fortawesome/free-regular-svg-icons": "^5.10.2",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@types/babel-types": "^7.0.9",
+    "babel-types": "^6.26.0",
     "bind-decorator": "^1.0.11",
+    "coffee-script": "^1.12.7",
     "color": "^3.1.2",
     "dexie": "^2.0.4",
     "grapheme-splitter": "^1.0.4",
@@ -73,6 +76,7 @@
     "react-transition-group": "^2.9.0",
     "recompose": "^0.30.0",
     "requestidlecallback": "^0.3.0",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }

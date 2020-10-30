@@ -1,7 +1,7 @@
 dbinit= (loaded)->
     c=Config.mongo
     mongodb=require 'mongodb'
-    mongodb.MongoClient.connect "mongodb://#{c.user}:#{c.pass}@#{c.host}:#{c.port}/#{c.database}?w=0",(err,db)->
+    mongodb.MongoClient.connect "mongodb://#{c.host}:#{c.port}/#{c.database}?w=0",(err,db)->
         if err?
             console.error err
             throw err
