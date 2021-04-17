@@ -1,6 +1,6 @@
 # TODO: this is almost a copy of the default.
 module.exports =
-  name: "月下人狼"
+  name: "月下痴汉"
   # HTTP server
   http:
     port: 8800
@@ -39,9 +39,9 @@ module.exports =
     # trueにしてはいけない
     securityHole: false
   maintenance:
-    # 人狼の更新などを行う際のパスワード
+    # 痴汉の更新などを行う際のパスワード
     password: "test"
-    # 人狼の更新スクリプト
+    # 痴汉の更新スクリプト
     script:[
       "git pull"
     ]
@@ -157,7 +157,7 @@ module.exports =
     # mail address to which content of report form is sent.
     mail: "someone@example.com"
     # subject of mail
-    mailSubject: "月下人狼 Report Form"
+    mailSubject: "月下痴汉 Report Form"
     # categories available in the report form.
     # leave this empty to not show a category selection control.
     categories: [

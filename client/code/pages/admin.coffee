@@ -66,7 +66,7 @@ tabs=
                         $("#pullresult").text result.error
                     else
                         $("#pullresult").text result.result
-                    Index.util.ask "管理界面","要停止人狼服务器吗?",(result)->
+                    Index.util.ask "管理界面","要停止痴汉服务器吗?",(result)->
                         if result
                             ss.rpc "admin.end",(result)->
     news:

@@ -6,7 +6,7 @@ exports.SAFETY_EXCLUDED_JOBS = SAFETY_EXCLUDED_JOBS = ["QueenSpectator","Spy2","
 # ------ 役職一覧
 # 基本役職
 exports.jobs=["Human","Werewolf","Diviner","Psychic","Madman","Guard","Couple","Fox",
-# ミラーズホロウの人狼
+# ミラーズホロウの痴汉
 "Hunter","Cupid",
 # 特殊役職?
 "Poisoner","BigWolf","TinyFox","Cat",
@@ -18,71 +18,71 @@ exports.jobs=["Human","Werewolf","Diviner","Psychic","Madman","Guard","Couple","
 "Bat","Noble","Slave","Magician","Spy","WolfDiviner",
 # 桃栗期間限定役職
 "Fugitive","Merchant","QueenSpectator","MadWolf","Liar","Spy2","Copier",
-# 究極の人狼の役職
+# 究極の痴汉の役職
 "ToughGuy","Cursed","ApprenticeSeer","Diseased","Spellcaster","Lycan","Priest","Prince","PI","Sorcerer",
 "Doppleganger","CultLeader","Vampire","LoneWolf","Witch","Oldman","Tanner","OccultMania","WolfCub","Thief",
 "Hoodlum","TroubleMaker","FrankensteinsMonster",
 "BloodyMary",
-# うそつき人狼の役職
+# うそつき痴汉の役職
 "Dictator","SeersMama","Trapper","WolfBoy","King",
-# Twitter人狼的职业
+# Twitter痴汉的职业
 "Counselor","Miko","GreedyWolf","FascinatingWolf","SolitudeWolf","ToughWolf","ThreateningWolf",
-# dat人狼
+# dat痴汉
 "Sleepwalker",
-# 人狼物語
+# 痴汉物語
 "CurseWolf",
-# 人狼議事
+# 痴汉議事
 "Trickster",
-# 人狼物語（瓜科国）
+# 痴汉物語（瓜科国）
 "MadCouple",
-# 人狼物語（薔薇の下国）
+# 痴汉物語（薔薇の下国）
 "NightRabbit",
-# 人狼物語（深海国）
+# 痴汉物語（深海国）
 "Fate","QueenOfNight","CynthiaWolf","Saint",
-# 人狼物語（三日月国）
+# 痴汉物語（三日月国）
 "Tarzan",
 # 天国系の役職
-"Lover", # 人狼天国
-"ObstructiveMad", # 人狼天国
+"Lover", # 痴汉天国
+"ObstructiveMad", # 痴汉天国
 "WanderingGuard", # 錠前天国
-"BadLady", # 蒼汁天国、人狼天国
+"BadLady", # 蒼汁天国、痴汉天国
 # ねじれ天国
 "Bomber","Blasphemy","Ushinotokimairi","DualPersonality","GachaAddicted",
 "Gambler","Faker","NetherWolf",
-# 人狼式
+# 痴汉式
 "Emma","EyesWolf","TongueWolf","Oracle","Hitokotonushinokami",
 "SealWolf","Oni",
 # えけけ鯖
 "MadHunter","Ascetic"
-# 人狼パーティー
+# 痴汉パーティー
 "TinyGhost","Ninja","Twin","Dracula","VampireClan"
 # その他
 "RedHood","Baker","XianFox","LunaticLover"
-# 人狼放浪記
+# 痴汉放浪記
 "MadDog","CraftyWolf","Pumpkin","MadScientist","SpiritPossessed","Forensic"
 # 牢獄の悪夢
 "PsychoKiller","Cosplayer",
-# 人狼NET
+# 痴汉NET
 "Satori",
-# わんないと人狼
+# わんないと痴汉
 "Phantom",
-# 月夜の人狼
+# 月夜の痴汉
 "DrawGirl","CautiousWolf","SnowLover","Raven","Samurai",
-# 月夜の人狼（闇夜の人狼）
+# 月夜の痴汉（闇夜の痴汉）
 "DarkClown",
-# 人狼HOUSE
+# 痴汉HOUSE
 "Hypnotist",
-# 人狼ジャッジメント
+# 痴汉ジャッジメント
 "BlackCat","Amanojaku",
-# 人狼 SUPER DX（幻冬舎）
+# 痴汉 SUPER DX（幻冬舎）
 "Illusionist",
-# 魔法都市の人狼
+# 魔法都市の痴汉
 "Elementaler",
-# 24時間耐久人狼
+# 24時間耐久痴汉
 "IntuitionWolf",
-# 絶対的人狼
+# 絶対的痴汉
 "AbsoluteWolf",
-#人狼村池袋本店
+#痴汉村池袋本店
 "DarkWolf",
 # オリジナル
 "SantaClaus","Reindeer",
@@ -93,7 +93,7 @@ exports.jobs=["Human","Werewolf","Diviner","Psychic","Madman","Guard","Couple","
 # 隠されていて自分で入れることができない役職
 exports.hiddenJobs = [
     "Light", "Neet", "MinionSelector", "QuantumPlayer", "HolyMarked", "Lorelei",
-    # 宇宙人狼
+    # 宇宙痴汉
     "SpaceWerewolfCrew", "SpaceWerewolfImposter", "SpaceWerewolfObserver","SpaceWerewolfGuard","SpaceWerewolfSabotage"
 ]
 
@@ -165,7 +165,7 @@ exports.gachaData =
 # 役職ルールたち 役職人数一覧を返す（Humanは向こうで補完）
 normal1=(number)->
     ret={}
-    #狼
+    #痴汉
     ret.Werewolf=1
     if number>=8
         ret.Werewolf++
@@ -200,7 +200,7 @@ normal1=(number)->
     ret
 normal2=(number)->
     ret={}
-    # 人狼
+    # 痴汉
     ret.Werewolf=1
     if number>=8
         ret.Werewolf++
@@ -355,7 +355,7 @@ exports.jobrules=[
           ret
       }
       {
-        name:"人狼占卜师"
+        name:"痴汉占卜师"
         rule:(number)->
           ret=normal1 number
           ret.Werewolf--
@@ -430,7 +430,7 @@ exports.jobrules=[
           minNumber:6
           rule:(number)->
             ret={}
-            # 狼凭
+            # 痴汉凭
             ret.Lycan=1
             if number>=10
               ret.Lycan++
@@ -552,7 +552,7 @@ exports.jobrules=[
           ret.Werewolf=1
           ret.Diviner=1
           ret.Guard=1
-          # 人狼
+          # 痴汉
           if number>=9
             ret.Werewolf++
             count++
@@ -683,10 +683,10 @@ exports.jobrules=[
 # ルールオブジェクトを得る
 getruleobj=(name)->
     # オブジェクトから探す
-    if name=="特殊规则.量子人狼"
+    if name=="特殊规则.量子痴汉"
         # 特殊だ!
         return {
-            name:"量子人狼"
+            name:"量子痴汉"
             rule:null
             suggestedNight:{
                 max:60
@@ -705,11 +705,11 @@ getruleobj=(name)->
     null
 # 规则関数を得る
 exports.getrulefunc=(name)->
-    if name=="内部利用.量子人狼"
-        # 量子人狼のときは
+    if name=="内部利用.量子痴汉"
+        # 量子痴汉のときは
         return (number)->
             ret={}
-            #狼
+            #痴汉
             ret.Werewolf=1
             if number>=8
                 ret.Werewolf++
@@ -1458,7 +1458,7 @@ exports.new_rules=[
             }
         ]
     }
-    # 人狼系
+    # 痴汉系
     {
         type: 'group'
         label:
@@ -1697,12 +1697,12 @@ exports.new_rules=[
             }
         ]
     }
-    # 量子人狼
+    # 量子痴汉
     {
         type: 'group'
         label:
             id: 'quantum'
-            visible:(rule)->rule.casting=="特殊规则.量子人狼"
+            visible:(rule)->rule.casting=="特殊规则.量子痴汉"
         items:[
             {
                 type: 'item'

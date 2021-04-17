@@ -43,7 +43,7 @@ exports.start=->
                         rule:null
                     }
                     {
-                        name:"量子人狼"
+                        name:"量子痴汉"
                         rule:null
                     }
                     {

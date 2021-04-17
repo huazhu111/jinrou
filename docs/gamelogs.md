@@ -87,7 +87,7 @@ GJした
 * target: 蘇生相手
 * flag:成功ならtrue 失敗ならfalse
 
-## 人狼占卜师
+## 痴汉占卜师
 ### wolfdivine
 占った
 

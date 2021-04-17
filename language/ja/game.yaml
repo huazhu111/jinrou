@@ -5,7 +5,7 @@ common:
   # Penalty for sudden death
   suddenDeathPenalty: '猝死惩罚'
   # Chemical werewolf
-  chemicalWerewolf: '炼成人狼'
+  chemicalWerewolf: '炼成痴汉'
   # 敗北村
   losemode: '败北村'
 # Error messages
@@ -61,9 +61,9 @@ error:
     # Players number is not enough.
     playerNotEnough: '人数不足，不能开始。含替身君最少要有{{count}}人。'
     # Too many for quantum werewolf.
-    tooManyQuantum: '人数过多。量子人狼的人数应当在{{count}}人以下。'
+    tooManyQuantum: '人数过多。量子痴汉的人数应当在{{count}}人以下。'
     # Chemical werewolf is not available under this rule.
-    noChemical: '本规则下无法使用炼成人狼。'
+    noChemical: '本规则下无法使用炼成痴汉。'
     # unknown casting name is given
     unknownCasting: '不存在此配置。'
     # Helper target does not exist
@@ -163,10 +163,10 @@ system:
     debateEnd: '白天的讨论时间到此结束。请投票决定要处死的人。'
   # Logs related to werewolves' phase
   werewolf:
-    diseased: '人狼们染病了。今天无法出击。'
-    wolfcub: '为狼之子复仇吧，今天可以袭击两个人。'
+    diseased: '痴汉们染病了。今天无法出击。'
+    wolfcub: '为痴汉之子复仇吧，今天可以袭击两个人。'
     # A user is notified to be attacked by a werewolf.
-    attacked: '{{name}} 被人狼袭击了。'
+    attacked: '{{name}} 被痴汉袭击了。'
     sleepwalker: '{{results}} 在夜间徘徊。'
   # Logs related to voting
   voting:
@@ -214,7 +214,7 @@ phase:
 
 # Reason of death
 found:
-  normal: '{{name}} 不成样子的尸体被发现了。'
+  normal: '{{name}} 浑身白灼的裸体被发现了。'
   curse: '{{name}} 被咒杀了。'
   punish: '{{name}} 被处刑了。'
   leave: '{{name}} 离开了村子。'
@@ -230,9 +230,9 @@ found:
 
 # Detailed reason of death
 foundDetail:
-  werewolf: '人狼的袭击'
-  werewolf2: '人狼的袭击'
-  trickedWerewolf: '人狼的袭击'
+  werewolf: '痴汉的袭击'
+  werewolf2: '痴汉的袭击'
+  trickedWerewolf: '痴汉的袭击'
   poison: '毒药'
   hinamizawa: '雏见泽症候群发作'
   vampire: '吸血鬼的袭击'
@@ -271,15 +271,15 @@ foundDetail:
   bonds: '因羁绊而自尽'
   lorelei: '怨恨的歌声'
   loreleisuicide: '追随罗蕾莱自尽'
-  oni: '被鬼捉走'
+  oni: '被鬼抱走'
   fallback: '未知原因'
   situation: '{{name}} 的死因是 {{detail}}。'
 
 # Result of Game
 judge:
-  human: '村子里的人狼已经被赶尽杀绝。'
+  human: '村子里的痴汉已经被赶尽杀绝。'
   neet: '村子变成了NEET的乐园。'
-  werewolf: '人狼吃掉了最后一个村民，向着下一个住满了猎物的村庄前进了…'
+  werewolf: '痴汉吃掉了最后一个村民，向着下一个住满了猎物的村庄前进了…'
   fox: '村子成了妖狐的玩物。'
   devil: '村子成了恶魔的玩物。'
   friendsNormal: '在{{count}}人爱的力量面前，所有阻碍都无法与之匹敌。'
@@ -287,7 +287,7 @@ judge:
   friendsAll: '村子被恋人们支配了。'
   cult: '村子被教会支配了。'
   vampire: '吸血鬼饮尽了最后一个村民的鲜血，向着下一个住满了猎物的村庄前进了…'
-  lonewolf: '人狼吃掉了最后一个村民，向着下一个住满了猎物的村庄前进了…'
+  lonewolf: '痴汉吃掉了最后一个村民，向着下一个住满了猎物的村庄前进了…'
   raven: '村子被乌鸦支配了。'
   hooligan: '村子被暴徒引发的暴乱破坏殆尽了。'
   lorelei: '罗蕾莱魅惑了村人们，在漩涡中消失无踪了…'
@@ -299,13 +299,13 @@ judge:
   # short summary
   short:
     human: '村人胜利'
-    werewolf: '人狼胜利'
+    werewolf: '痴汉胜利'
     fox: '妖狐胜利'
     devil: '恶魔胜利'
     friends: '恋人胜利'
     cult: '邪教主胜利'
     vampire: '吸血鬼胜利'
-    lonewolf: '一匹狼胜利'
+    lonewolf: '一匹痴汉胜利'
     raven: '乌鸦胜利'
     hooligan: '暴徒胜利'
     lorelei: '罗蕾莱胜利'
@@ -318,7 +318,7 @@ quantum:
 # Crafted logs.
 logs:
   werewolf:
-    name: '狼的远吠'
+    name: '痴汉的远吠'
     comment: '嗷呜・・・'
   couple:
     name: '模糊的低语声'
@@ -327,4 +327,4 @@ logs:
 # Tweet.
 tweet:
   # Tweet when game ended
-  gameend: '「{{roomname}}」的结果:{{result}} #月下人狼'
+  gameend: '「{{roomname}}」的结果:{{result}} #月下痴汉'

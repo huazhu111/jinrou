@@ -455,16 +455,16 @@ class Game
         @revote_num=0   # 再投票を行った回数
         @last_time=Date.now()   # 最後に動きがあった時間
 
-        @werewolf_target=[] # 人狼の襲い先
+        @werewolf_target=[] # 痴汉の襲い先
         @werewolf_target_remain=0   #襲撃先をあと何人設定できるか
-        @werewolf_flag=[] # 人狼襲撃に関するフラグ
+        @werewolf_flag=[] # 痴汉襲撃に関するフラグ
 
         # ドラキュラの吸血の成否 (true -> 成功, false -> 失敗)
         @dracula_result = null
 
         @revive_log = [] # 蘇生した人の記録
         @nextturn_deferred_log = []
-        @guard_log = []  # 襲撃阻止の記録（for 瞳狼）
+        @guard_log = []  # 襲撃阻止の記録（for 瞳痴汉）
         @ninja_data =
 
         @slientexpires=0    # 静かにしてろ！（この時間まで）
@@ -713,7 +713,7 @@ class Game
         # 身代わり君を入れる
         if @rule.scapegoat == "on"
             jallnum++
-        # ケミカル人狼は1人2つ
+        # ケミカル痴汉は1人2つ
         if @rule.chemical == "on"
             jallnum *= 2
         # sum up all numbers
@@ -802,7 +802,7 @@ class Game
 
         # まず身代わりくんを決めてあげる
         if @rule.scapegoat=="on"
-            # 人狼、妖狐にはならない
+            # 痴汉、妖狐にはならない
             nogoat=[]   #身代わりがならない役職
             if @rule.safety!="free"
                 nogoat=nogoat.concat Shared.game.nonhumans  #人外は除く
@@ -838,7 +838,7 @@ class Game
                 name: @i18n.t "common.scapegoat"
             }
             if @rule.chemical == "on"
-                # ケミカル人狼なので合体役職にする
+                # ケミカル痴汉なので合体役職にする
                 pl1 = Player.factory gotjs[0], this
                 pl1.setProfile profile
                 pl1.scapegoat = true
@@ -860,7 +860,7 @@ class Game
 
         if @rule.rolerequest=="on" && @rule.chemical != "on"
             # 希望役職制ありの場合はまず希望を優先してあげる
-            # （ケミカル人狼のときは面倒なのでパス）
+            # （ケミカル痴汉のときは面倒なのでパス）
             for job,num of joblist
                 while num>0
                     # 候補を集める
@@ -894,7 +894,7 @@ class Game
         gotjs = []
         for i in [0...(players.length)]
             gotjs.push []
-        # 人狼系と妖狐系を全て数える（やや適当）
+        # 痴汉系と妖狐系を全て数える（やや適当）
         all_wolves = 0
         all_foxes = 0
         for job,num of joblist
@@ -910,11 +910,11 @@ class Game
             while i++<num
                 r=Math.floor Math.random()*players.length
                 if @rule.chemical == "on" && gotjs[r].length == 1
-                    # ケミカル人狼の場合調整が入る
+                    # ケミカル痴汉の場合調整が入る
                     if all_wolves == 1
-                        # 人狼が1人のときは人狼を消さない
+                        # 痴汉が1人のときは痴汉を消さない
                         if (gotjs[r][0] in Shared.game.categories.Werewolf && job in Shared.game.categories.Fox) || (gotjs[r][0] in Shared.game.categories.Fox && job in Shared.game.categories.Werewolf)
-                           # 人狼×妖狐はまずい
+                           # 痴汉×妖狐はまずい
                            i--
                            if loop_count++ >= 100
                                # 配役失敗
@@ -932,7 +932,7 @@ class Game
                         name:pl.name
                     }
                     if @rule.chemical == "on"
-                        # ケミカル人狼
+                        # ケミカル痴汉
                         pl1 = Player.factory gotjs[r][0], this
                         pl1.setProfile profile
                         pl2 = Player.factory gotjs[r][1], this
@@ -942,7 +942,7 @@ class Game
                         newpl.setOriginalJobname newpl.getJobname()
                         @players.push newpl
                     else
-                        # ふつうの人狼
+                        # ふつうの痴汉
                         newpl=Player.factory gotjs[r][0], this
                         newpl.setProfile profile
                         @players.push newpl
@@ -980,7 +980,7 @@ class Game
             pl.transform @,newpl,true,true
 
         if @rule.wolfminion
-            # 狼の子分がいる場合、子分決定者を作る
+            # 痴汉の子分がいる場合、子分決定者を作る
             wolves=@players.filter((x)->x.isWerewolf())
             if wolves.length>0
                 r=Math.floor Math.random()*wolves.length
@@ -1041,8 +1041,8 @@ class Game
                 helper.setFlag ppl.id  # ヘルプ先
                 @participants.push helper
 
-        # 量子人狼の場合はここで可能性リストを作る
-        if @rule.jobrule=="特殊规则.量子人狼"
+        # 量子痴汉の場合はここで可能性リストを作る
+        if @rule.jobrule=="特殊规则.量子痴汉"
             # パターンを初期化（最初は全パターン）
             quats=[]    # のとみquantum_patterns
             pattern_no=0    # とばす
@@ -1055,7 +1055,7 @@ class Game
                         type:job,
                         number:i
                     }
-            # 人狼用
+            # 痴汉用
             i=1
             while @rule.quantum_joblist["Werewolf#{i}"]>0
                 jobname_list.push {
@@ -1111,7 +1111,7 @@ class Game
                     if result
                         obj[o.id]={
                             jobtype:"Werewolf"
-                            rank:+result[1] # 狼の序列
+                            rank:+result[1] # 痴汉の序列
                             dead:false
                         }
                     else
@@ -1189,8 +1189,8 @@ class Game
     beginturn:->
         night = Phase.isNight @phase
 
-        if @rule.jobrule=="特殊规则.量子人狼"
-            # 量子人狼
+        if @rule.jobrule=="特殊规则.量子痴汉"
+            # 量子痴汉
             # 全員の確率を出してあげるよーーーーー
             # 確率テーブルを
             probability_table={}
@@ -1294,7 +1294,7 @@ class Game
 
         if night
             # jobデータを作る
-            # 人狼の襲い先
+            # 痴汉の襲い先
             @werewolf_target=[]
             unless @day==1 && @rule.scapegoat!="off"
                 @werewolf_target_remain=1
@@ -1312,7 +1312,7 @@ class Game
                         comment: @i18n.t "system.werewolf.diseased"
                     splashlog @id,this,log
                 else if fl=="WolfCub"
-                    # 狼の子フラグが立っている（2回襲撃できる）
+                    # 痴汉の子フラグが立っている（2回襲撃できる）
                     @werewolf_target_remain=2
                     log=
                         mode:"wolfskill"
@@ -1614,7 +1614,7 @@ class Game
         alives=[]
         deads=[]
         pids=[]
-        # 狼の襲撃: 105
+        # 痴汉の襲撃: 105
         # ドラキュラの吸血: 106
         mids=[105, 106]
         for player in @players
@@ -1635,7 +1635,7 @@ class Game
         pids = shuffle pids
         for mid in midsu
             if mid == 105
-                # 人狼の襲撃処理を挟む
+                # 痴汉の襲撃処理を挟む
                 @midnightWolfAttack()
             if mid == 106
                 @midnightDraculaAttack()
@@ -1653,9 +1653,9 @@ class Game
         # midnight中の変化を戻す
         @skillTargetHook.reset()
 
-    # 夜の狼の攻撃を処理する
+    # 夜の痴汉の攻撃を処理する
     midnightWolfAttack:->
-        # 狼の処理
+        # 痴汉の処理
         for target in @werewolf_target
             actTarget = @skillTargetHook.get target.to
             t=@getPlayer actTarget
@@ -1691,7 +1691,7 @@ class Game
                 for fl in @werewolf_flag
                     res = fl.match /^ToughWolf_(.+)$/
                     if res?
-                        # 一途な狼がすごい
+                        # 一途な痴汉がすごい
                         tw = @getPlayer res[1]
                         t=@getPlayer actTarget
                         if t?
@@ -1708,7 +1708,7 @@ class Game
                     for fl in @werewolf_flag
                         res = fl.match /^GreedyWolf_(.+)$/
                         if res?
-                            # 欲張り狼がやられた!
+                            # 欲張り痴汉がやられた!
                             gw = @getPlayer res[1]
                             if gw?
                                 gw.die this,"greedy"
@@ -1820,11 +1820,11 @@ class Game
     #   "night": 夜になったタイミング
     #   "other":その他(ターン変わり時の能力で死んだやつなど）
     bury:(type)->
-        # 瞳狼が生存しているフラグ
+        # 瞳痴汉が生存しているフラグ
         eyes_flag = @players.some (x)-> !x.dead && x.isJobType("EyesWolf")
 
         if eyes_flag
-            # 瞳狼用のログを表示
+            # 瞳痴汉用のログを表示
             for obj in @guard_log
                 if obj.attack == AttackKind.werewolf
                     target = @getPlayer obj.guardedid
@@ -2290,8 +2290,8 @@ class Game
         team=null
         friends_count=null
 
-        # 量子人狼のときは特殊ルーチン
-        if @rule.jobrule=="特殊规则.量子人狼"
+        # 量子痴汉のときは特殊ルーチン
+        if @rule.jobrule=="特殊规则.量子痴汉"
             assured_wolf=
                 alive:0
                 dead:0
@@ -2307,7 +2307,7 @@ class Game
                         break
                     flag=JSON.parse x.flag
                     if flag.Werewolf==1
-                        # うわあああ絶対人狼だ!!!!!!!!!!
+                        # うわあああ絶対痴汉だ!!!!!!!!!!
                         if flag.dead==1
                             assured_wolf.dead++
                         else if flag.dead==0
@@ -2338,7 +2338,7 @@ class Game
                 if aliveClowns >= 1
                     team="Werewolf"
             else if humans<=wolves && vampires==0
-                # 人狼勝利
+                # 痴汉勝利
                 team="Werewolf"
                 # 道化生存時は勝敗反転
                 aliveClowns = @players.filter((x)-> x.isJobType("DarkClown") && !x.dead).length
@@ -2352,7 +2352,7 @@ class Game
                 team="Friend"
 
             if team=="Werewolf" && wolves==1
-                # 一匹狼判定
+                # 一匹痴汉判定
                 lw=aliveps.filter((x)->x.isWerewolf())[0]
                 if lw?.getTeam() == "LoneWolf"
                     team="LoneWolf"
@@ -2847,8 +2847,8 @@ class Game
                 return
 ###
 logs:[{
-    mode:"day"(昼) / "system"(システムメッセージ) /  "werewolf"(狼) / "heaven"(天国) / "prepare"(開始前/終了後) / "skill"(能力ログ) / "nextturn"(ゲーム進行) / "audience"(観戦者のひとりごと) / "monologue"(夜のひとりごと) / "voteresult" (投票結果） / "couple"(共有者) / "fox"(妖狐) / "will"(遺言) / "madcouple"(叫迷狂人)
-    "wolfskill"(人狼に見える) / "emmaskill"(閻魔に見える) / "eyeswolfskill"(瞳狼に見える)
+    mode:"day"(昼) / "system"(システムメッセージ) /  "werewolf"(痴汉) / "heaven"(天国) / "prepare"(開始前/終了後) / "skill"(能力ログ) / "nextturn"(ゲーム進行) / "audience"(観戦者のひとりごと) / "monologue"(夜のひとりごと) / "voteresult" (投票結果） / "couple"(共有者) / "fox"(妖狐) / "will"(遺言) / "madcouple"(叫迷狂人)
+    "wolfskill"(痴汉に見える) / "emmaskill"(閻魔に見える) / "eyeswolfskill"(瞳痴汉に見える)
     "draculaskill"(ドラキュラに見える)
     "hidden"(終了後/霊界のみ見える追加情報)
     "poem"(Poetが送ったpoem)
@@ -3248,11 +3248,11 @@ class Player
     getMainJobDisp:-> @getJobDisp()
     # 村人かどうか
     isHuman:->!@isWerewolf()
-    # 人狼かどうか
+    # 痴汉かどうか
     isWerewolf:->false
     # 妖狐かどうか
     isFox:->false
-    # 人狼の仲間として見えるかどうか
+    # 痴汉の仲間として見えるかどうか
     isWerewolfVisible:->@isWerewolf()
     # 妖狐の仲間としてみえるか
     isFoxVisible:->false
@@ -3270,7 +3270,7 @@ class Player
     isReviver:->false
     # 閲覧可能な仲間情報
     getVisibilityQuery:->{
-        # 狼の仲間
+        # 痴汉の仲間
         wolves: false
         # スパイ2
         spy2s: false
@@ -3284,7 +3284,7 @@ class Player
         draculaBitten: false
         # サンタクロース
         santaclauses: false
-        # 詐欺師（宇宙人狼）
+        # 詐欺師（宇宙痴汉）
         spaceWerewolfImposters: false
     }
     # 汎用的な役職属性取得関数 (Existential)
@@ -3415,7 +3415,7 @@ class Player
     @JOB_T_DEAD :2  # 死んだ人が対象
     # フォームの種類（null or FormType)
     formType: null
-    #人狼に食われて死ぬかどうか
+    #痴汉に食われて死ぬかどうか
     willDieWerewolf:true
     #占いの結果
     fortuneResult: FortuneResult.human
@@ -3710,7 +3710,7 @@ class Werewolf extends Player
         # もう襲撃選択終了しているときはtrue
         if game.werewolf_target_remain<=0 || !Phase.isNight(game.phase)
             return true
-        # 身代わりくんは他に襲撃可能な人狼がいないときのみ行動可能
+        # 身代わりくんは他に襲撃可能な痴汉がいないときのみ行動可能
         if @scapegoat
             unless @isAttacker() && game.players.filter((x)->!x.dead && x.isWerewolf() && x.isAttacker()).length == 1
                 return true
@@ -3724,7 +3724,7 @@ class Werewolf extends Player
         unless tp?
             return game.i18n.t "error.common.nonexistentPlayer"
         if game.rule.wolfattack!="ok" && tp?.isWerewolf()
-            # 人狼は人狼に攻撃できない
+            # 痴汉は痴汉に攻撃できない
             return game.i18n.t "roles:Werewolf.noWolfAttack"
         game.werewolf_target.push {
             from:@id
@@ -3745,7 +3745,7 @@ class Werewolf extends Player
                 game.i18n.t "roles:Werewolf.select", {name: @name, target: tp.name}
 
         if @isJobType "SolitudeWolf"
-            # 孤独な狼なら自分だけ…
+            # 孤独な痴汉なら自分だけ…
             log.to=@id
         splashlog game.id,game,log
         game.splashjobinfo game.players.filter (x)=>x.id!=playerid && x.isWerewolf()
@@ -3773,7 +3773,7 @@ class Werewolf extends Player
     team: "Werewolf"
     getVisibilityQuery:->
         res = super
-        # 狼の仲間情報を閲覧可能
+        # 痴汉の仲間情報を閲覧可能
         res.wolves = true
         res.spy2s = true
         res
@@ -4039,7 +4039,7 @@ class Poisoner extends Player
         # 埋毒者の逆襲
         canbedead = game.players.filter (x)->!x.dead    # 生きている人たち
         if Found.isNormalWerewolfAttack found
-            # 噛まれた場合は狼のみ
+            # 噛まれた場合は痴汉のみ
             if game.rule.poisonwolf == "selector"
                 # 襲撃者を道連れにする
                 canbedead = canbedead.filter (x)->x.id==from
@@ -4203,10 +4203,10 @@ class Spy extends Player
             @die game,"spygone"
     job_target:0
     isWinner:(game,team)->
-        team==@getTeam() && @dead && @flag=="spygone"    # 人狼が勝った上で自分は任務完了の必要あり
+        team==@getTeam() && @dead && @flag=="spygone"    # 痴汉が勝った上で自分は任務完了の必要あり
     getVisibilityQuery:->
         res = super
-        # スパイは人狼が分かる
+        # スパイは痴汉が分かる
         res.wolves = true
         res
     makeJobSelection:(game, isvote)->
@@ -4237,7 +4237,7 @@ class WolfDiviner extends Werewolf
     jobdone:(game)->game.werewolf_target_remain<=0 && @flag?.target?
     job:(game,playerid,query)->
         if query.jobtype!="WolfDiviner"
-            # 人狼の仕事
+            # 痴汉の仕事
             return super
         # 占い
         if @flag.target?
@@ -4383,7 +4383,7 @@ class Fugitive extends Player
         @addGamelog game,"runto",null,pl.id
         null
     checkDeathResistance:(game, found)->
-        # 狼の襲撃・ヴァンパイアの襲撃・魔女の毒薬は回避
+        # 痴汉の襲撃・ヴァンパイアの襲撃・魔女の毒薬は回避
         if Found.isNormalWerewolfAttack(found) || Found.isNormalVampireAttack(found) || found in ["witch", "oni"]
             if @target!=""
                 if Found.isNormalWerewolfAttack found
@@ -4392,7 +4392,7 @@ class Fugitive extends Player
         return false
 
     midnight:(game,midnightSort)->
-        # 人狼の家に逃げていたら即死
+        # 痴汉の家に逃げていたら即死
         pl=game.getPlayer game.skillTargetHook.get @target
         return unless pl?
         # 今夜の逃亡先を記録
@@ -4544,7 +4544,7 @@ class Spy2 extends Player
     team:"Werewolf"
     getVisibilityQuery:->
         res = super
-        # スパイは人狼が分かる
+        # スパイは痴汉が分かる
         res.wolves = true
         res
     dying:(game,found)->
@@ -4673,7 +4673,7 @@ class Fanatic extends Madman
     type:"Fanatic"
     getVisibilityQuery:->
         res = super
-        # 狂信者は人狼が分かる
+        # 狂信者は痴汉が分かる
         res.wolves = true
         res
 class Immoral extends Player
@@ -4721,7 +4721,7 @@ class ToughGuy extends Player
     hasDeadResistance:->true
     checkDeathResistance:(game, found)->
         if Found.isNormalWerewolfAttack found
-            # 狼の襲撃に耐える
+            # 痴汉の襲撃に耐える
             unless @flag?
                 @setFlag "bitten"
             game.addGuardLog @id, AttackKind.werewolf, GuardReason.tolerance
@@ -4859,7 +4859,7 @@ class Cursed extends Player
     hasDeadResistance:->true
     checkDeathResistance:(game, found)->
         if Found.isNormalWerewolfAttack found
-            # 噛まれた場合人狼側になる
+            # 噛まれた場合痴汉側になる
             unless @flag
                 # まだ噛まれていない
                 @setFlag "bitten"
@@ -4876,7 +4876,7 @@ class Cursed extends Player
     beforebury:(game, type)->
         return false if @dead
         if type == "punish" && @flag in ["bitten", "vampire"]
-            # 投票後（夜になる直前）のタイミングで狼に変化
+            # 投票後（夜になる直前）のタイミングで痴汉に変化
             log=null
             newpl=null
             if @flag=="bitten"
@@ -4927,7 +4927,7 @@ class Diseased extends Player
     dying:(game,found)->
         super
         if Found.isNormalWerewolfAttack found
-            # 噛まれた場合次の日人狼襲撃できない！
+            # 噛まれた場合次の日痴汉襲撃できない！
             game.werewolf_flag.push "Diseased"   # 病人フラグを立てる
 class Spellcaster extends Player
     type:"Spellcaster"
@@ -5486,7 +5486,7 @@ class Oldman extends Player
             # もう今日の老衰処理は終わった
             return false
 
-        # 人狼を数える
+        # 痴汉を数える
         wolves=game.players.filter (x)->x.isWerewolf() && !x.dead
         if wolves.length*2 < game.day
             # 寿命
@@ -5554,7 +5554,7 @@ class OccultMania extends Player
         # game.ss.publish.user newpl.realid,"refresh",{id:game.id}
         null
 
-# 狼の子
+# 痴汉の子
 class WolfCub extends Werewolf
     type:"WolfCub"
     dying:(game,found)->
@@ -5657,7 +5657,7 @@ class MinionSelector extends Player
         unless pl?
             return
 
-        # 狼の子分と複合させる
+        # 痴汉の子分と複合させる
         newpl=Player.factory null, game, pl,null,WolfMinion    # WolfMinion
         pl.transProfile newpl
         pl.transform game,newpl,true
@@ -6083,7 +6083,7 @@ class QuantumPlayer extends Player
                             to:@id
                             comment: game.i18n.t "roles:Diviner.resultlog", {name: @name, target: pl.name, result: game.i18n.t "roles:fortune.werewolf"}
                         splashlog game.id,game,log
-                        # 人狼のやつ以外排除
+                        # 痴汉のやつ以外排除
                         game.quantum_patterns=game.quantum_patterns.filter (obj)=>
                             if obj[@id].jobtype=="Diviner"# && obj[@id].dead==false
                                 obj[pl.id].jobtype == "Werewolf"
@@ -6118,7 +6118,7 @@ class QuantumPlayer extends Player
                         if value.jobtype=="Werewolf" && value.dead==false && value.rank<min
                             min=value.rank
                     if obj[@id].jobtype=="Werewolf" && obj[@id].rank==min && obj[@id].dead==false
-                        # 自分が筆頭人狼
+                        # 自分が筆頭痴汉
                         if obj[pl.id].jobtype == "Werewolf"# || obj[pl.id].dead==true
                             # 襲えない
                             false
@@ -6135,7 +6135,7 @@ class QuantumPlayer extends Player
             return false
 
         if flag.Werewolf==1 && team=="Werewolf"
-            # 人狼がかったぞ!!!!!
+            # 痴汉がかったぞ!!!!!
             true
         else if flag.Werewolf==0 && team=="Human"
             # 人間がかったぞ!!!!!
@@ -6149,10 +6149,10 @@ class QuantumPlayer extends Player
             # ???
             return ""
         if flag.Werewolf == 1
-            # 人狼に確定しているので人狼陣営
+            # 痴汉に確定しているので痴汉陣営
             return "Werewolf"
         if flag.Werewolf == 0
-            # 人狼でないことが確定しているので村人陣営
+            # 痴汉でないことが確定しているので村人陣営
             return "Human"
         # 未確定なのでなし
         return ""
@@ -6214,13 +6214,13 @@ class RedHood extends Player
     dying:(game,found,from)->
         super
         if Found.isNormalWerewolfAttack found
-            # 狼に襲われた
+            # 痴汉に襲われた
             # 誰に襲われたか覚えておく
             @setFlag from
         else
             @setFlag null
     beforebury:(game, type)->
-        # 自分を食った狼が死んだら即座に蘇生
+        # 自分を食った痴汉が死んだら即座に蘇生
         if @flag && @dead
             w=game.getPlayer @flag
             if w?.dead
@@ -6258,7 +6258,7 @@ class Counselor extends Player
         t = game.getPlayer target
         return unless t?
         tteam = t.getTeam()
-        # 人狼とかヴァンパイアを襲ったら殺される
+        # 痴汉とかヴァンパイアを襲ったら殺される
         if t.isWerewolf() && tteam != "Human"
             @die game, "werewolf2", t.id
             @addGamelog game,"counselKilled", t.type, target
@@ -6337,7 +6337,7 @@ class GreedyWolf extends Werewolf
     jobdone:(game)->game.werewolf_target_remain<=0 && (@flag || game.day==1)
     job:(game,playerid,query)->
         if query.jobtype!="GreedyWolf"
-            # 人狼の仕事
+            # 痴汉の仕事
             return super
         if @flag
             return game.i18n.t "error.common.alreadyUsed"
@@ -6384,7 +6384,7 @@ class FascinatingWolf extends Werewolf
             @setFlag ""
     job:(game,playerid,query)->
         if query.jobtype!="FascinatingWolf"
-            # 人狼の仕事
+            # 痴汉の仕事
             return super
         if @flag
             return game.i18n.t "error.common.alreadyUsed"
@@ -6439,7 +6439,7 @@ class SolitudeWolf extends Werewolf
     sleeping:(game)-> !@flag || super
     isListener:(game,log)->
         if log.mode in ["werewolf","wolfskill"]
-            # 狼の声は聞こえない（自分のスキルは除く）
+            # 痴汉の声は聞こえない（自分のスキルは除く）
             log.to? && isLogTarget(log.to, this)
         else super
     job:(game,playerid,query)->
@@ -6478,7 +6478,7 @@ class SolitudeWolf extends Werewolf
         return res.filter (x)->x!="werewolf"
     getVisibilityQuery:->
         res = super
-        # 孤独な狼は仲間情報が分からない
+        # 孤独な痴汉は仲間情報が分からない
         res.wolves = false
         res.spy2s = false
         res
@@ -6486,7 +6486,7 @@ class ToughWolf extends Werewolf
     type:"ToughWolf"
     job:(game,playerid,query)->
         if query.jobtype!="ToughWolf"
-            # 人狼の仕事
+            # 痴汉の仕事
             return super
         if @flag
             return game.i18n.t "error.common.alreadyUsed"
@@ -6506,7 +6506,7 @@ class ToughWolf extends Werewolf
     getOpenForms:(game)->
         res = super
         unless @sleeping game
-            # 襲撃可能なときは一途な狼の能力も発動可能
+            # 襲撃可能なときは一途な痴汉の能力も発動可能
             unless @flag
                 # 能力はまだ使用されていない
                 res.push {
@@ -6530,7 +6530,7 @@ class ThreateningWolf extends Werewolf
         @setTarget null
     job:(game,playerid,query)->
         if query.jobtype!="ThreateningWolf"
-            # 人狼の仕事
+            # 痴汉の仕事
             return super
         if @flag
             return game.i18n.t "error.common.alreadyUsed"
@@ -6822,7 +6822,7 @@ class BloodyMary extends Player
             if game.players.filter((x)->!x.dead && x.isWerewolf()).length>1
                 !(game.players.some (x)->!x.dead && x.getTeam() in ["Werewolf","LoneWolf"])
             else
-                # 狼が残り1匹だと何もない
+                # 痴汉が残り1匹だと何もない
                 true
         else
             true
@@ -6874,7 +6874,7 @@ class BloodyMary extends Player
     revive:->
     getTeam:->
         if @flag == "punish"
-            # 処刑されたので人狼陣営
+            # 処刑されたので痴汉陣営
             "Werewolf"
         else
             # 他は村人陣営
@@ -6891,7 +6891,7 @@ class BloodyMary extends Player
                 # 村人を……
                 pls=game.players.filter (x)->!x.dead && x.getTeam()=="Human"
             else if @flag=="werewolf"
-                # 人狼を……
+                # 痴汉を……
                 pls=game.players.filter (x)->!x.dead && x.getTeam() in ["Werewolf","LoneWolf"]
             return (for pl in pls
                 {
@@ -6959,7 +6959,7 @@ class SantaClaus extends Player
         reindeers = game.players.filter (x)-> !x.dead && x.isJobType "Reindeer"
         return reindeers.length > 0
     checkDeathResistance:(game, found, from)->
-        # 狼の襲撃・ヴァンパイアの襲撃・魔女の毒薬はトナカイが身代わり可能
+        # 痴汉の襲撃・ヴァンパイアの襲撃・魔女の毒薬はトナカイが身代わり可能
         if Found.isNormalWerewolfAttack(found) || Found.isNormalVampireAttack(found) || found in ["witch"]
             reindeers = game.players.filter (x)-> !x.dead && x.isJobType "Reindeer"
             if reindeers.length > 0
@@ -7269,7 +7269,7 @@ class DrawGirl extends Player
     sleeping:->true
     dying:(game,found)->
         if Found.isNormalWerewolfAttack found
-            # 狼に噛まれた
+            # 痴汉に噛まれた
             @setFlag "bitten"
         else
             @setFlag ""
@@ -7285,7 +7285,7 @@ class DrawGirl extends Player
             splashlog game.id,game,log
             @setFlag ""
             @addGamelog game,"drawgirlpower",null,null
-# 慎重な狼
+# 慎重な痴汉
 class CautiousWolf extends Werewolf
     type:"CautiousWolf"
     makeJobSelection:(game, isvote)->
@@ -7722,7 +7722,7 @@ class GotChocolate extends Player
                 @die game, "poison", @id
             else if r < 0.57
                 # ストーカー化
-                # ケミカル人狼では何も起こらない（告発対策）
+                # ケミカル痴汉では何も起こらない（告発対策）
                 if @game.rule.chemical != "on"
                     topl = game.getPlayer re[1]
                     if topl?
@@ -7850,7 +7850,7 @@ class Hypnotist extends Madman
             return
 
         if pl.isWerewolf()
-            # 人狼を襲撃した場合は人狼の襲撃を無効化する
+            # 痴汉を襲撃した場合は痴汉の襲撃を無効化する
             game.werewolf_target = []
             game.werewolf_target_remain = 0
 
@@ -9463,7 +9463,7 @@ class Elementaler extends Player
         pl.transform game, newpl, true
     dying:(game, found, from)->
         super
-        # 人狼の襲撃で死亡したときは護衛先を道連れにする
+        # 痴汉の襲撃で死亡したときは護衛先を道連れにする
         unless Found.isNormalWerewolfAttack found
             return
         unless @flag?.day == game.day
@@ -9815,7 +9815,7 @@ class AbsoluteWolf extends Werewolf
         # 追加勝利も許さない＆絆化していたら死ぬ
         if me.isCmplType("HooliganMember") || me.isCmplType("LunaticLoved") || me.isCmplType("Bonds")
             return false
-        # 残りの狼の数と絶対狼の数が一致していたら喪失
+        # 残りの痴汉の数と絶対痴汉の数が一致していたら喪失
         wolves=game.players.filter (x)->x.isWerewolf() && !x.dead
         awolves=wolves.filter (x)->x.isJobType "AbsoluteWolf"
         if wolves.length == awolves.length
@@ -9855,7 +9855,7 @@ class Oracle extends Player
         if friendsn > 0
             if nfriendsn <= 2
                 @setFlag "friend"
-        # 人カウントと人狼系の差が2名以下
+        # 人カウントと痴汉系の差が2名以下
         else if humans - wolves <= 2
             if friendsn > 0
                 @setFlag "friend"
@@ -9863,7 +9863,7 @@ class Oracle extends Player
                 @setFlag "fox"
             else
                 @setFlag "werewolf"
-        # 人狼系の数が1名
+        # 痴汉系の数が1名
         else if wolves == 1
             if friendsn > 0
                 @setFlag "friend"
@@ -10309,7 +10309,7 @@ class Listener extends Player
 
 class QueenOfNight extends Madman
     type:"QueenOfNight"
-    midnightSort:122 #人狼占いによる狂人変化が先
+    midnightSort:122 #痴汉占いによる狂人変化が先
     constructor:->
         super
         @flag="[]"
@@ -10739,13 +10739,13 @@ class Oni extends Player
             successCount: 0
         }
     isWinner:(game, team)->
-        # 自身の生存 + 人狼系の生存
+        # 自身の生存 + 痴汉系の生存
         if @dead
             return false
         wolves = game.players.filter (pl)-> pl.isWerewolf()
         return wolves.some (pl)-> !pl.dead
     checkDeathResistance:(game, found)->
-        # 30%で狼の襲撃に耐える
+        # 30%で痴汉の襲撃に耐える
         if Math.random() < 0.3 && Found.isNormalWerewolfAttack found
             game.addGuardLog @id, AttackKind.werewolf, GuardReason.tolerance
             return true
@@ -11560,7 +11560,7 @@ class Guarded extends Complex
         unless Found.isGuardableAttack found
             return super
         else
-            # 狼に噛まれた場合は耐える
+            # 痴汉に噛まれた場合は耐える
             guard=game.getPlayer @cmplFlag
             if guard?
                 guard.addGamelog game,"GJ",null,@id
@@ -11591,7 +11591,7 @@ class Muted extends Complex
     getSpeakChoiceDay:(game)->
         base = @main.getSpeakChoiceDay game
         base.concat ["-day"]
-# 狼の子分
+# 痴汉の子分
 class WolfMinion extends Complex
     cmplType:"WolfMinion"
     getTeam:->"Werewolf"
@@ -11658,7 +11658,7 @@ class TrapGuarded extends Complex
             @sub?.midnight? game,midnightSort
 
         # 狩人とかぶったら狩人が死んでしまう!!!!!
-        # midnight: 狼の襲撃よりも前に行われることが保証されている処理
+        # midnight: 痴汉の襲撃よりも前に行われることが保証されている処理
         return if midnightSort != @midnightSort
         wholepl=game.getPlayer @id  # 一番表から見る
         result=@checkGuard game,wholepl
@@ -11705,10 +11705,10 @@ class TrapGuarded extends Complex
 
     checkDeathResistance:(game, found, from)->
         unless Found.isGuardableAttack found
-            # 狼・ヴァンパイア以外だとしぬ
+            # 痴汉・ヴァンパイア以外だとしぬ
             return super
         else
-            # 狼・ヴァンパイアに噛まれた場合は耐える
+            # 痴汉・ヴァンパイアに噛まれた場合は耐える
             guard=game.getPlayer @cmplFlag
             if guard?
                 guard.addGamelog game,"trapGJ",null,@id
@@ -11791,7 +11791,7 @@ class MikoProtected extends Complex
         @mcall game, @main.sunsetAlways, game
         @sub?.sunsetAlways? game
         @uncomplex game
-# 威嚇する人狼に威嚇された
+# 威嚇する痴汉に威嚇された
 class Threatened extends Complex
     cmplType:"Threatened"
     sleeping:->true
@@ -11975,7 +11975,7 @@ class BombTrapped extends Complex
             @sub?.midnight? game,midnightSort
 
         # 狩人とかぶったら狩人が死んでしまう!!!!!
-        # midnight: 狼の襲撃よりも前に行われることが保証されている処理
+        # midnight: 痴汉の襲撃よりも前に行われることが保証されている処理
         if midnightSort != @midnightSort then return
         wholepl=game.getPlayer @id  # 一番表から見る
         result=@checkGuard game,wholepl
@@ -12266,7 +12266,7 @@ class SamuraiGuarded extends Complex
         unless Found.isGuardableAttack found
             # 襲撃以外は素通し
             return super
-        # 狼に噛まれた場合は耐えるが相打ち
+        # 痴汉に噛まれた場合は耐えるが相打ち
         samurai = game.getPlayer @cmplFlag
         attacker = game.getPlayer from
         if samurai?
@@ -12279,7 +12279,7 @@ class SamuraiGuarded extends Complex
                     "werewolf2"
             samurai.die game, samuraiFound, from
         if attacker?
-            # 次に狼も死亡
+            # 次に痴汉も死亡
             attacker.die game, "samurai", samurai?.id
         # 襲撃失敗理由を保存
         if Found.isGuardableWerewolfAttack found
@@ -12526,7 +12526,7 @@ class Authority extends Complex
         game.votingbox.votePower this,1 #票をひとつ増やす
         null
 
-# ケミカル人狼の役職
+# ケミカル痴汉の役職
 class Chemical extends Complex
     cmplType:"Chemical"
     getJobname:->
@@ -12711,7 +12711,7 @@ class Chemical extends Complex
                 result = @sub.checkDeathResistance(game, found, from) || result
 
         if wolfTolerance
-            # 人狼に対する襲撃耐性で耐えた
+            # 痴汉に対する襲撃耐性で耐えた
             game.addGuardLog @id, AttackKind.werewolf, GuardReason.tolerance
         return result
     makejobinfo:(game,result)->
@@ -13209,15 +13209,15 @@ module.exports.actions=(req,res,ss)->
             if playersnumber<6
                 res game.i18n.t "error.gamestart.playerNotEnough", {count: 6}
                 return
-            if query.jobrule=="特殊规则.量子人狼" && playersnumber>=20
+            if query.jobrule=="特殊规则.量子痴汉" && playersnumber>=20
                 # 多すぎてたえられない
                 res game.i18n.t "error.gamestart.tooManyQuantum", {count: 19}
                 return
-            # ケミカル人狼の場合
+            # ケミカル痴汉の場合
             if query.chemical=="on"
                 frees *= 2
-                # 黑暗火锅と量子人狼は無理
-                if query.jobrule in ["特殊规则.Endless黑暗火锅","特殊规则.量子人狼"]
+                # 黑暗火锅と量子痴汉は無理
+                if query.jobrule in ["特殊规则.Endless黑暗火锅","特殊规则.量子痴汉"]
                     res game.i18n.t "error.gamestart.noChemical"
                     return
 
@@ -13360,7 +13360,7 @@ module.exports.actions=(req,res,ss)->
                 if safety.jingais || safety.jobs
                     exceptions.push "SpiritPossessed"
                     special_exceptions.push "SpiritPossessed"
-                # 狂人狼（人気がないので出ない）
+                # 狂痴汉（人気がないので出ない）
                 if safety.jingais || safety.jobs
                     exceptions.push "MadWolf"
                     special_exceptions.push "MadWolf"
@@ -13368,7 +13368,7 @@ module.exports.actions=(req,res,ss)->
                 if safety.jingais || safety.jobs
                     exceptions.push "DarkClown"
                     special_exceptions.push "DarkClown"
-                # 絶対狼
+                # 絶対痴汉
                 if Math.random()<0.4
                     exceptions.push "AbsoluteWolf"
                     special_exceptions.push "AbsoluteWolf"
@@ -13402,7 +13402,7 @@ module.exports.actions=(req,res,ss)->
                                 category: game.i18n.t "roles:categoryName.#{type}"
                             }
                             return
-                # 人狼系は全除外してはいけない
+                # 痴汉系は全除外してはいけない
                 for cat in ["Werewolf"]
                     jobset = new Set Shared.game.categories[cat]
                     for job in excluded_exceptions
@@ -13535,7 +13535,7 @@ module.exports.actions=(req,res,ss)->
                     exceptions=exceptions.concat Shared.game.nonhumans
                     exceptions.push "Blasphemy"
                 else
-                    # 人狼0は避ける最低限の調整
+                    # 痴汉0は避ける最低限の調整
                     if countCategory("Werewolf") == 0
                         joblist.category_Werewolf=1
                         frees--
@@ -13549,7 +13549,7 @@ module.exports.actions=(req,res,ss)->
                     if joblist.Vampire == 0 && joblist.Dracula == 0
                         exceptions.push "VampireClan"
                         special_exceptions.push "VampireClan"
-                    # 花見客は狼1では出ない
+                    # 花見客は痴汉1では出ない
                     if countCategory("Werewolf") < 2
                         exceptions.push "Hanami"
                         special_exceptions.push "Hanami"
@@ -13578,15 +13578,15 @@ module.exports.actions=(req,res,ss)->
 
                 if safety.teams || safety.ppcheck
                     # 陣営調整もする
-                    # 人狼陣営
+                    # 痴汉陣営
                     if frees>0
-                        # 望ましい人狼陣営の人数は25〜350%くらい
+                        # 望ましい痴汉陣営の人数は25〜350%くらい
                         wolfteam_n = Math.round (playersnumber*(0.25 + Math.random()*0.1))
                         # ただし半数を超えない
                         plsh = Math.ceil(playersnumber/ 2)
                         if wolfteam_n >= plsh
                             wolfteam_n = plsh-1
-                        # 人狼系を数える
+                        # 痴汉系を数える
                         wolf_number = countCategory "Werewolf"
                         # 残りは狂人系
                         if wolf_number <= wolfteam_n
@@ -13979,7 +13979,7 @@ module.exports.actions=(req,res,ss)->
                         if (safety.teams || safety.ppcheck) && !category?
                             if job in Shared.game.teams.Werewolf
                                 if wolf_teams+1>=plsh
-                                    # 人狼が過半数を越えた（PP）
+                                    # 痴汉が過半数を越えた（PP）
                                     continue
                         if safety.jobs
                             # 職どうしの兼ね合いを考慮
@@ -13987,7 +13987,7 @@ module.exports.actions=(req,res,ss)->
                                 when "Psychic","RedHood"
                                     # 1人のとき霊能は意味ない
                                     if countCategory("Werewolf")==1
-                                        # 狼1人だと霊能が意味ない
+                                        # 痴汉1人だと霊能が意味ない
                                         continue
                                 when "Couple"
                                     # 共有者はひとりだと寂しい
@@ -14049,19 +14049,19 @@ module.exports.actions=(req,res,ss)->
                                     if joblist.Diviner==0 && joblist.ApprenticeSeer==0 && joblist.PI==0
                                         continue
                                 when "LoneWolf","FascinatingWolf","ToughWolf","WolfCub"
-                                    # 誘惑する女狼はほかに人狼がいないと効果発揮しない
-                                    # 一途な狼はほかに狼いないと微妙、一匹狼は1人だけででると狂人が絶望
+                                    # 誘惑する女痴汉はほかに痴汉がいないと効果発揮しない
+                                    # 一途な痴汉はほかに痴汉いないと微妙、一匹痴汉は1人だけででると狂人が絶望
                                     if countCategory("Werewolf")==0
                                         continue
                                 when "BigWolf"
-                                    # 強いので狼2以上
+                                    # 強いので痴汉2以上
                                     if countCategory("Werewolf")==0
                                         continue
                                     # 霊能を出す
                                     unless Math.random()<0.15 ||  init "Psychic","Human"
                                         continue
                                 when "BloodyMary"
-                                    # 狼が2以上必要
+                                    # 痴汉が2以上必要
                                     if countCategory("Werewolf")<=1
                                         continue
                                     # 女王とは共存できない
@@ -14084,16 +14084,16 @@ module.exports.actions=(req,res,ss)->
                                     if joblist.Raven==0
                                         continue
 
-                        # 絶対狼はセーフティに関わらず処理を実施する
+                        # 絶対痴汉はセーフティに関わらず処理を実施する
                         if job == "AbsoluteWolf"
-                            # 人狼系が2以上且つ人狼数と絶対狼数は一致しないこと
+                            # 痴汉系が2以上且つ痴汉数と絶対痴汉数は一致しないこと
                             if countCategory("Werewolf")==0 || countCategory("Werewolf") == joblist.AbsoluteWolf
                                 continue
-                            # 一匹狼とは共存できない
+                            # 一匹痴汉とは共存できない
                             if joblist.LoneWolf>0
                                 continue
                         if job == "LoneWolf"
-                            # 絶対狼とは共存できない
+                            # 絶対痴汉とは共存できない
                             if joblist.AbsoluteWolf>0
                                 continue
                         if job == "Reindeer"
@@ -14112,12 +14112,12 @@ module.exports.actions=(req,res,ss)->
 
                         joblist[job]++
                         if job == "MadWolf"
-                            # 狂人狼は2人以上出さない調整
+                            # 狂痴汉は2人以上出さない調整
                             possibility = possibility.filter (x)-> x != "MadWolf"
                             special_exceptions.push "MadWolf"
 
                         if (safety.teams || safety.ppcheck) && (job in Shared.game.teams.Werewolf)
-                            wolf_teams++    # 人狼陣営が増えた
+                            wolf_teams++    # 痴汉陣営が増えた
 
                         # ひとつ追加
                         if category?
@@ -14170,9 +14170,9 @@ module.exports.actions=(req,res,ss)->
                     # セーフティ超
                     joblist=best_list
 
-            else if query.jobrule=="特殊规则.量子人狼"
-                # 量子人狼のときは全員量子人間だけど役職はある
-                func=Shared.game.getrulefunc "内部利用.量子人狼"
+            else if query.jobrule=="特殊规则.量子痴汉"
+                # 量子痴汉のときは全員量子人間だけど役職はある
+                func=Shared.game.getrulefunc "内部利用.量子痴汉"
                 joblist=func frees
                 sum=0
                 for job of jobs
@@ -14181,14 +14181,14 @@ module.exports.actions=(req,res,ss)->
                 joblist.Human=frees-sum # 残りは村人だ!
                 list_for_rule = JSON.parse JSON.stringify joblist
                 ruleobj.quantum_joblist=joblist
-                # 人狼の順位を決めていく
+                # 痴汉の順位を決めていく
                 i=1
                 while joblist.Werewolf>0
                     joblist["Werewolf#{i}"]=1
                     joblist.Werewolf-=1
                     i+=1
                 delete joblist.Werewolf
-                # 量子人狼用
+                # 量子痴汉用
                 joblist={
                     QuantumPlayer:frees
                 }
@@ -14236,7 +14236,7 @@ module.exports.actions=(req,res,ss)->
                 # 敗北村の場合は表示
                 ruleinfo_str = "#{game.i18n.t "common.losemode"}　" + (ruleinfo_str ? "")
             if query.chemical == "on"
-                # ケミカル人狼の場合は表示
+                # ケミカル痴汉の場合は表示
                 ruleinfo_str = "#{game.i18n.t "common.chemicalWerewolf"}　" + (ruleinfo_str ? "")
 
             if ruleinfo_str != ""
@@ -14322,7 +14322,7 @@ module.exports.actions=(req,res,ss)->
                 res err
                 return
 
-            if ruleobj.rolerequest=="on" && !(query.jobrule in ["特殊规则.黑暗火锅","特殊规则.手调黑暗火锅","特殊规则.量子人狼","特殊规则.Endless黑暗火锅"])
+            if ruleobj.rolerequest=="on" && !(query.jobrule in ["特殊规则.黑暗火锅","特殊规则.手调黑暗火锅","特殊规则.量子痴汉","特殊规则.Endless黑暗火锅"])
                 # 希望役職制あり
                 # とりあえず入れなくする
                 M.rooms.update {id:roomid},{$set:{mode:"playing"}}
@@ -14725,7 +14725,7 @@ makelogsFor=(game,player,log)->
         return [log]
 
     if log.mode=="werewolf" && game.rule.wolfsound=="aloud"
-        # 狼の遠吠えが聞こえる
+        # 痴汉の遠吠えが聞こえる
         otherslog=
             mode:"werewolf"
             comment: game.i18n.t "logs.werewolf.comment"
@@ -14804,14 +14804,14 @@ isLogTarget = (to, player)->
 writeGlobalJobInfo = (game, player, result={})->
     unless Phase.isBeforeStart(game.phase)
         result.myteam = player.getTeamDisp()
-        # 絶対狼は全員に公開
+        # 絶対痴汉は全員に公開
         result.absolutewolves = game.players.filter((x)-> x.isJobType "AbsoluteWolf").map (x)->
                 x.publicinfo()
         # 女王観戦者の情報
         if player.getTeam() == "Human" && player.getTeamDisp() == "Human"
             result.queens = game.players.filter((x)-> x.isJobType "QueenSpectator").map (x)->
                 x.publicinfo()
-        # 狼による他の狼の把握
+        # 痴汉による他の痴汉の把握
         vq = player.getVisibilityQuery game
         if vq.wolves
             result.wolves = game.players.filter((x)-> x.isWerewolfVisible()).map (x)->
@@ -14839,7 +14839,7 @@ writeGlobalJobInfo = (game, player, result={})->
         if vq.santaclauses
             result.santaclauses = game.players.filter((x)->x.isJobType "SantaClaus").map (x)->
                 x.publicinfo()
-        # 詐欺師（宇宙人狼）
+        # 詐欺師（宇宙痴汉）
         if vq.spaceWerewolfImposters
             result.spaceWerewolfImposters = game.players.filter((x)->x.isJobType "SpaceWerewolfImposter").map (x)->
                 x.publicinfo()

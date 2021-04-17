@@ -168,7 +168,7 @@ makeOtherPrize=(result)->
             names: prizedata.counter.getkits_merchant
             func:(game,pl)->
                 game.gamelogs.filter((x)->x.target==pl.id && x.event=="sendkit").length
-        # 商品を人狼侧に送った回数
+        # 商品を痴汉侧に送った回数
         sendkits_to_wolves:
             names: prizedata.counter.sendkits_to_wolves
             func:(game,pl)->
@@ -230,7 +230,7 @@ makeOtherPrize=(result)->
                     "谨贺新春/谨贺新春"
                 ]
                 5:"鸡年大吉/鸡年大吉"
-                10:"认真过年少玩人狼/认真过年少玩人狼"
+                10:"认真过年少玩痴汉/认真过年少玩痴汉"
             func:(game,pl)->
                 date = new Date()
                 month=date.getMonth()

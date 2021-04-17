@@ -118,7 +118,7 @@ class OneLogInner extends React.PureComponent<IPropOneLog, {}> {
                     /* 人間 */
                     <th>{t('log.probabilityTable.Human')}</th>
                   )}
-                  {/* 人狼 */}
+                  {/* 痴汉 */}
                   <th>{t('log.probabilityTable.Werewolf')}</th>
                   {rule && rule.rules.get('quantumwerewolf_dead') !== 'no' ? (
                     /* 死亡 */

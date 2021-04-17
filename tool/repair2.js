@@ -60,7 +60,7 @@ function getdb(games){
 						break;
 					default:
 						if(wolves.some(function(x){return x==pl.type})){
-							//狼側
+							//痴汉側
 							pl.winner= gw=="Werewolf";
 						}else if(foxes.some(function(x){return x==pl.type})){
 							pl.winner= gw=="Fox";

@@ -771,9 +771,9 @@ getLabeledGroupsOfJobrules = ()->
             {
                 type: 'item'
                 value:
-                    id: '特殊规则.量子人狼'
+                    id: '特殊规则.量子痴汉'
                     roleSelect: false
-                    preset: Shared.game.getrulefunc "内部利用.量子人狼"
+                    preset: Shared.game.getrulefunc "内部利用.量子痴汉"
                     suggestedOptions:
                         night:
                             type: 'range'

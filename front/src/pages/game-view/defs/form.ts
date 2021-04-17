@@ -39,7 +39,7 @@ export interface FormOption {
  * Specially-defined form data.
  */
 interface SpecialFormData {
-  // 人狼の襲撃
+  // 痴汉の襲撃
   _Werewolf: {
     /**
      * 残りの襲撃可能人数

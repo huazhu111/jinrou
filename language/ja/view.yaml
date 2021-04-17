@@ -1,7 +1,7 @@
 # Language file for views
 
 # description of application.
-description: "实时聊天·高自由度的人狼服务器。有100种以上的职业可供使用。"
+description: "实时聊天·高自由度的痴汉服务器。有100种以上的职业可供使用。"
 # name of mypage.
 mypage: "个人页面"
 # name of lobby.
@@ -13,7 +13,7 @@ manual: "参考手册"
 # back to home link.
 home: "返回主页"
 # about page
-about: "关于月下人狼"
+about: "关于月下痴汉"
 # settings page
 settings: "设置"
 # label of open menu button

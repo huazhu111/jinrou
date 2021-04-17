@@ -3,7 +3,7 @@
 # Name of all jobs.
 jobname:
   Human: '村人'
-  Werewolf: '人狼'
+  Werewolf: '痴汉'
   Diviner: '占卜师'
   Psychic: '灵能者'
   Madman: '狂人'
@@ -11,18 +11,18 @@ jobname:
   Couple: '共有者'
   Fox: '妖狐'
   Poisoner: '埋毒者'
-  BigWolf: '大狼'
+  BigWolf: '大痴汉'
   TinyFox: '小狐'
   Bat: '蝙蝠'
   Noble: '贵族'
   Slave: '奴隶'
   Magician: '魔术师'
   Spy: '间谍'
-  WolfDiviner: '人狼占卜师'
+  WolfDiviner: '痴汉占卜师'
   Fugitive: '逃亡者'
   Merchant: '商人'
   QueenSpectator: '女王观战者'
-  MadWolf: '狂人狼'
+  MadWolf: '狂痴汉'
   Neet: 'NEET'
   Liar: '骗子'
   Spy2: '间谍Ⅱ'
@@ -38,7 +38,7 @@ jobname:
   ApprenticeSeer: '见习占卜师'
   Diseased: '病人'
   Spellcaster: '咒言师'
-  Lycan: '狼凭'
+  Lycan: '痴汉凭'
   Priest: '圣职者'
   Prince: '王子'
   PI: '超常现象研究者'
@@ -46,14 +46,14 @@ jobname:
   Doppleganger: '二重身'
   CultLeader: '邪教主'
   Vampire: '吸血鬼'
-  LoneWolf: '一匹狼'
+  LoneWolf: '一匹痴汉'
   Cat: '猫又'
   Witch: '魔女'
   Oldman: '老人'
   Tanner: '皮革匠'
   Thief: '小偷'
   OccultMania: '怪诞狂热者'
-  WolfCub: '狼之子'
+  WolfCub: '痴汉之子'
   WhisperingMad: '低语狂人'
   Lover: '求爱者'
   MinionSelector: '仆从选择者'
@@ -61,17 +61,17 @@ jobname:
   Dictator: '独裁者'
   SeersMama: '占卜师的妈妈'
   Trapper: '陷阱师'
-  WolfBoy: '狼少年'
+  WolfBoy: '痴汉少年'
   Hoodlum: '无赖'
   QuantumPlayer: '量子人类'
   RedHood: '小红帽'
   Counselor: '策士'
   Miko: '巫女'
-  GreedyWolf: '贪婪的狼'
-  FascinatingWolf: '魅惑的女狼'
-  SolitudeWolf: '孤独的狼'
-  ToughWolf: '硬汉人狼'
-  ThreateningWolf: '威吓的狼'
+  GreedyWolf: '贪婪的痴汉'
+  FascinatingWolf: '魅惑的女痴汉'
+  SolitudeWolf: '孤独的痴汉'
+  ToughWolf: '硬汉痴汉'
+  ThreateningWolf: '威吓的痴汉'
   HolyMarked: '圣痕者'
   WanderingGuard: '游荡猎人'
   ObstructiveMad: '碍事的狂人'
@@ -84,7 +84,7 @@ jobname:
   Phantom: '怪盗'
   BadLady: '恶女'
   DrawGirl: '看板娘'
-  CautiousWolf: '慎重的狼'
+  CautiousWolf: '慎重的痴汉'
   Pyrotechnist: '烟火师'
   Baker: '面包店'
   Bomber: '炸弹魔'
@@ -94,7 +94,7 @@ jobname:
   GotChocolate: '巧克力'
   MadDog: '狂犬'
   Hypnotist: '催眠师'
-  CraftyWolf: '狡猾的狼'
+  CraftyWolf: '狡猾的痴汉'
   Shishimai: '狮子舞'
   Pumpkin: '南瓜魔'
   MadScientist: '疯狂科学家'
@@ -108,15 +108,15 @@ jobname:
   MadHunter: '复仇者'
   MadCouple: '尖叫狂人'
   Emma: '阎魔'
-  EyesWolf: '瞳狼'
-  TongueWolf: '舌祸狼'
+  EyesWolf: '瞳痴汉'
+  TongueWolf: '舌祸痴汉'
   BlackCat: '黑猫'
   Idol: '偶像'
   XianFox: '仙狐'
   LurkingMad: '潜伏者'
   SnowLover: '雪女'
   Raven: '乌鸦'
-  DecoyWolf: '囮狼'
+  DecoyWolf: '囮痴汉'
   LunaticLover: '狂爱者'
   Hooligan: '暴徒'
   HooliganAttacker: '暴动者'
@@ -135,7 +135,7 @@ jobname:
   DarkClown: '暗小丑'
   DualPersonality: '二重人格'
   Sacrifice: '活祭品'
-  AbsoluteWolf: '绝对狼'
+  AbsoluteWolf: '绝对痴汉'
   Oracle: '预言者'
   NightRabbit: '夜兔'
   GachaAddicted: '课金者'
@@ -146,22 +146,22 @@ jobname:
   Listener: '直播观众'
   QueenOfNight: '月下美人'
   Tarzan: '野孩子'
-  CurseWolf: '咒狼'
+  CurseWolf: '咒痴汉'
   Hitokotonushinokami: '一言主神'
   RemoteWorker: '在宅者'
-  IntuitionWolf: '直觉型狼'
+  IntuitionWolf: '直觉型痴汉'
   Lorelei: '罗蕾莱'
   Gambler: '赌徒'
   Faker: '老千'
-  SealWolf: '印狼'
-  CynthiaWolf: '月狼'
+  SealWolf: '印痴汉'
+  CynthiaWolf: '月痴汉'
   Trickster: '恶作剧妖精'
   Sleepwalker: '梦游患者'
   Disguised: '变装者'
   Oni: '鬼'
   Saint: '圣子'
-  NetherWolf: '冥狼'
-  DarkWolf: '暗狼'
+  NetherWolf: '冥痴汉'
+  DarkWolf: '暗痴汉'
   Acrobat: '杂耍艺人'
   Hanami: '赏花客'
   SpaceWerewolfCrew: '宇航员'
@@ -177,7 +177,7 @@ jobname:
 # Name of categories.
 categoryName:
   Human: '村人系'
-  Werewolf: '人狼系'
+  Werewolf: '痴汉系'
   Fox: '妖狐系'
   Madman: '狂人系'
   Immoral: '背德者系'
@@ -187,8 +187,8 @@ categoryName:
 # Name of teams.
 teamName:
   Human: '村人阵营'
-  Werewolf: '人狼阵营'
-  LoneWolf: '人狼阵营'
+  Werewolf: '痴汉阵营'
+  LoneWolf: '痴汉阵营'
   Fox: '妖狐阵营'
   Friend: '恋人阵营'
   Devil: '恶魔'
@@ -203,7 +203,7 @@ teamName:
 # Fortune result.
 fortune:
   human: '村人'
-  werewolf: '人狼'
+  werewolf: '痴汉'
   vampire: '吸血鬼'
   pumpkin: '南瓜'
   oni: '鬼'
@@ -211,8 +211,8 @@ fortune:
 # Psychic result.
 psychic:
   human: '村人'
-  werewolf: '人狼'
-  BigWolf: '大狼'
+  werewolf: '痴汉'
+  BigWolf: '大痴汉'
   TinyFox: '小狐'
   oni: '鬼'
   # delimiter of multiple result in chemical.
@@ -240,9 +240,9 @@ Psychic:
 # Werewolf
 Werewolf:
   # Error: Werewolves cannot eat each other
-  noWolfAttack: '人狼之间不能相互袭击。'
+  noWolfAttack: '痴汉之间不能相互袭击。'
   # Selected a target.
-  select: '以 {{name}} 为首的人狼们决定今晚袭击 {{target}}。'
+  select: '以 {{name}} 为首的痴汉们决定今晚袭击 {{target}}。'
 
 # Guard
 Guard:
@@ -274,8 +274,8 @@ Spy:
 
 # WolfDiviner
 WolfDiviner:
-  select: '人狼占卜师 {{name}} 占卜了 {{target}} 的身份。'
-  resultlog: '人狼占卜师 {{name}} 占卜了 {{target}} 的身份，他是 {{result}}。'
+  select: '痴汉占卜师 {{name}} 占卜了 {{target}} 的身份。'
+  resultlog: '痴汉占卜师 {{name}} 占卜了 {{target}} 的身份，他是 {{result}}。'
 
 # Fugitive
 Fugitive:
@@ -318,7 +318,7 @@ Light:
 # Devil
 Devil:
   # attacked by a werewolf.
-  attacked: '{{name}} 被人狼袭击了，恶魔的力量大幅增强。'
+  attacked: '{{name}} 被痴汉袭击了，恶魔的力量大幅增强。'
 
 # Cupid
 Cupid:
@@ -339,7 +339,7 @@ Stalker:
 # Cursed
 Cursed:
   # became a werewolf.
-  becomeWerewolf: '{{name}} 受到诅咒变成了人狼。'
+  becomeWerewolf: '{{name}} 受到诅咒变成了痴汉。'
   # became a vampire.
   becomeVampire: '{{name}} 受到诅咒变成了吸血鬼。'
 
@@ -426,9 +426,9 @@ Lover:
 # MinionSelector
 MinionSelector:
   # Select a target.
-  select: '{{name}} 指定 {{target}}（{{jobname}}）成为了狼的仆从。'
+  select: '{{name}} 指定 {{target}}（{{jobname}}）成为了痴汉的仆从。'
   # Become a wolfminion.
-  become: '{{name}} 变成了狼的仆从。'
+  become: '{{name}} 变成了痴汉的仆从。'
 
 # Theif
 Thief:
@@ -465,7 +465,7 @@ Trapper:
 # WolfBoy
 WolfBoy:
   # Select a target.
-  select: '{{name}} 把 {{target}} 伪装成了人狼。'
+  select: '{{name}} 把 {{target}} 伪装成了痴汉。'
 
 # Hoodlum
 Hoodlum:
@@ -495,21 +495,21 @@ Miko:
 # GreedyWolf
 GreedyWolf:
   # Select a greed.
-  select: '为了满足 {{name}} 的贪欲。人狼们今晚可以多袭击一个人。'
+  select: '为了满足 {{name}} 的贪欲。痴汉们今晚可以多袭击一个人。'
 
 # FascinatingWolf
 FascinatingWolf:
   # Select a target.
   select: '{{name}} 魅惑了 {{target}}。'
   # Affected by her.
-  affected: '{{name}} 被狼魅惑了。'
+  affected: '{{name}} 被痴汉魅惑了。'
 
 # SolitudeWolf
 SolitudeWolf:
   # A turn of solitudewolf comes
   turn: '{{name}} 现在可以袭击他人了。'
   # Another wolf's turn!
-  noturn: '其他的人狼还活着。{{name}} 现在不能袭击他人。'
+  noturn: '其他的痴汉还活着。{{name}} 现在不能袭击他人。'
 
 # ToughWolf
 ToughWolf:
@@ -596,7 +596,7 @@ DrawGirl:
 
 CautiousWolf:
   # Select not to attack.
-  selectNoAttack: '以 {{name}} 为首的人狼们决定今晚不发动袭击。'
+  selectNoAttack: '以 {{name}} 为首的痴汉们决定今晚不发动袭击。'
   # option not to attack.
   noAttackOption: '不袭击'
 
@@ -644,7 +644,7 @@ GotChocolate:
     # Cursed chocolate
     cursed: '{{name}} 吃下的巧克力是被诅咒的巧克力，下一天白天不能发言。'
     # Black chocolate
-    black: '{{name}} 吃下的巧克力是黑巧克力，占卜·灵能结果将变为「人狼」。'
+    black: '{{name}} 吃下的巧克力是黑巧克力，占卜·灵能结果将变为「痴汉」。'
     # White chocolate
     white: '{{name}} 吃下的巧克力是白巧克力，占卜·灵能结果将变为「村人」。'
     # Poison chocolate
@@ -708,7 +708,7 @@ Emma:
   # Emma result strings
   result:
     # killed by werewolf
-    werewolf: '{{name}} 成为了人狼的食物。'
+    werewolf: '{{name}} 成为了痴汉的食物。'
     # killed with poison
     poison: '{{name}} 由于中毒死去了。'
     # Killed by QueenSpectator
@@ -752,7 +752,7 @@ Emma:
     # Lorelei
     lorelei: '{{name}} 被怨恨的歌声诱导了。'
     # Killed by Oni
-    oni: '{{name}} 被鬼捉走了。'
+    oni: '{{name}} 被鬼抱走了。'
 
 EyesWolf:
   # EyesWolf result strings
@@ -849,7 +849,7 @@ HomeComer:
 
 Illusionist:
   # select a target of illusion.
-  select: '{{name}} 把今晚人狼的袭击目标改变成了 {{target}}。'
+  select: '{{name}} 把今晚痴汉的袭击目标改变成了 {{target}}。'
 
 DragonKnight:
   # select a target of kill.
@@ -891,7 +891,7 @@ DarkClown:
   
 DualPersonality:
   # Your team is 'werewolf'.
-  werewolf: '今天 {{name}} 的主导人格是人狼侧的。'
+  werewolf: '今天 {{name}} 的主导人格是痴汉侧的。'
   # Your team is 'human'.
   human: '今天 {{name}} 的主导人格是村人侧的。'
 
@@ -906,7 +906,7 @@ AbsoluteWolf:
 Oracle:
   friend: '{{name}} 得到了神谕。恋人阵营马上就要获胜了。'
   fox: '{{name}} 得到了神谕。妖狐阵营马上就要获胜了。'
-  werewolf: '{{name}} 得到了神谕。人狼阵营马上就要获胜了。'
+  werewolf: '{{name}} 得到了神谕。痴汉阵营马上就要获胜了。'
 
 GachaAddicted:
   type:
@@ -948,7 +948,7 @@ QueenOfNight:
 
 Tarzan:
   # Result of skill.
-  result: '{{name}} 察觉到了 {{count}} 名人狼的气息。'
+  result: '{{name}} 察觉到了 {{count}} 名痴汉的气息。'
 
 RemoteWorker:
   # Canceled a punishment.
@@ -987,13 +987,13 @@ Sleepwalker:
   awake: '{{name}} 察觉自己的深夜里徘徊。'
 
 Oni:
-  select: '{{name}} 准备把 {{target}} 捉走。'
+  select: '{{name}} 准备把 {{target}} 抱走。'
 
 Saint:
   select: '{{name}} 对 {{target}} 使用了奇迹之力。'
 
 Acrobat:
-  cancel: '{{name}} 躲开了人狼的袭击。'
+  cancel: '{{name}} 躲开了痴汉的袭击。'
 
 Hanami:
   drunk: '{{name}} 与友人们赏花过后尽兴归去了，其中似乎有人酩酊大醉。'
@@ -1051,9 +1051,9 @@ CultMember:
 
 WolfMinion:
   # name for desc
-  name: '狼的仆从'
+  name: '痴汉的仆从'
   # jobname
-  jobname: '狼的仆从（{{jobname}}）'
+  jobname: '痴汉的仆从（{{jobname}}）'
 
 HolyProtected:
   guarded: '{{name}} 被神圣的力量守护了。'
